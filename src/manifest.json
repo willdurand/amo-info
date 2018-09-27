@@ -1,0 +1,37 @@
+{
+  "manifest_version": 2,
+  "name": "amo-info",
+  "description": "An extension to show information about AMO related services.",
+  "version": "1.0.0",
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "page_action": {
+    "default_title": "AMO DevTools",
+    "default_icon": {
+      "64": "icons/icon.png"
+    },
+    "browser_style": true,
+    "default_popup": "popup/popup.html",
+    "show_matches": [
+      "https://addons-dev.allizom.org/*",
+      "https://addons.allizom.org/*",
+      "https://addons.mozilla.org/*",
+      "https://discovery.addons-dev.allizom.org/*",
+      "https://discovery.addons.allizom.org/*",
+      "https://discovery.addons.mozilla.org/*"
+    ]
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "activeTab",
+    "https://addons-dev.allizom.org/*",
+    "https://addons.allizom.org/*",
+    "https://addons.mozilla.org/*",
+    "https://discovery.addons-dev.allizom.org/*",
+    "https://discovery.addons.allizom.org/*",
+    "https://discovery.addons.mozilla.org/*"
+  ]
+}
