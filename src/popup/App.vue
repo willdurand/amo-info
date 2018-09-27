@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import Loader from './Loader.vue';
-import Table from './Table.vue';
+import Loader from './Loader';
+import Table from './Table';
 
 export default {
   components: {
@@ -51,19 +51,23 @@ export default {
     experiments() {
       const { experiments } = this.payload || {};
 
-      return Object.keys(experiments).reduce((array, key) => {
-        return array.concat({ name: key, enabled: experiments[key] });
-      }, []);
+      return Object.keys(experiments).reduce(
+        (array, key) => array.concat({ name: key, enabled: experiments[key] }),
+        []
+      );
     },
     featureFlags() {
+      // eslint-disable-next-line camelcase
       const { feature_flags } = this.payload || {};
 
-      return Object.keys(feature_flags).reduce((array, key) => {
-        return array.concat({
-          name: key.replace(/^enableFeature/, ''),
-          enabled: feature_flags[key],
-        });
-      }, []);
+      return Object.keys(feature_flags).reduce(
+        (array, key) =>
+          array.concat({
+            name: key.replace(/^enableFeature/, ''),
+            enabled: feature_flags[key],
+          }),
+        []
+      );
     },
     shortCommit() {
       return this.payload ? this.payload.commit.substring(0, 12) : null;

@@ -1,6 +1,6 @@
 <template>
   <table class="Table">
-    <tr v-for="item in items">
+    <tr v-for="item in items" v-bind:key="item.name">
       <td class="Table-item-name">
         {{ item.name | humanize }}
       </td>

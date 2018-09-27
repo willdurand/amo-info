@@ -5,13 +5,13 @@
   "author": "William Durand <will+git@drnd.me>",
   "license": "MPL-2.0",
   "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --hide-modules",
+    "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
+    "build:release": "npm run build && node scripts/build-zip.js",
     "lint": "eslint --ext .js,.vue src",
     "precommit": "pretty-quick --staged",
     "prettier": "prettier \"src/**/*.{js,vue}\"",
     "prettier:write": "npm run prettier -- --write",
-    "build": "cross-env NODE_ENV=production webpack --hide-modules",
-    "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
-    "build-zip": "node scripts/build-zip.js",
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
