@@ -37,7 +37,7 @@ export default {};
 }
 
 .Loader {
-  margin: 100px auto 0;
+  margin: 20px auto;
   text-align: center;
   width: 70px;
 

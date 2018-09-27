@@ -20,7 +20,8 @@
 
     <div class="commit">
       <h3>Commit</h3>
-      <p><pre>{{ shortCommit }}</pre></p>
+      <Loader v-if="loading" />
+      <p v-else><pre>{{ shortCommit }}</pre></p>
     </div>
 
     <div class="version" v-if="payload && payload.version">
