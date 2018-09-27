@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rimraf dist/ && cross-env NODE_ENV=production webpack --hide-modules",
     "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
-    "build:release": "npm run build && rimraf dist-zip/ && node scripts/build-zip.js",
+    "build:release": "npm run build && rimraf dist-zip/ && node scripts/build-zip.js && npm run build:src",
+    "build:src": "git archive --format zip -o dist-zip/amo-info-sources.zip HEAD",
     "lint": "eslint --ext .js,.vue src",
     "precommit": "pretty-quick --staged",
     "prettier": "prettier \"src/**/*.{js,vue}\" --write",
