@@ -10,8 +10,7 @@
     "build:release": "npm run build && rimraf dist-zip/ && node scripts/build-zip.js",
     "lint": "eslint --ext .js,.vue src",
     "precommit": "pretty-quick --staged",
-    "prettier": "prettier \"src/**/*.{js,vue}\"",
-    "prettier:write": "npm run prettier -- --write",
+    "prettier": "prettier \"src/**/*.{js,vue}\" --write",
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
