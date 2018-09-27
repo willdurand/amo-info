@@ -4,6 +4,9 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
       .then((response) => response.json())
       .then((payload) => {
         chrome.runtime.sendMessage({ type: 'success', payload });
+      })
+      .catch(() => {
+        chrome.runtime.sendMessage({ type: 'error' });
       });
   }
 });

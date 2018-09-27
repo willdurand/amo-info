@@ -23,11 +23,9 @@
       <p><pre>{{ shortCommit }}</pre></p>
     </div>
 
-    <div class="version">
-      <template v-if="payload.version">
+    <div class="version" v-if="payload.version">
         <h3>Version</h3>
         <p class="version">{{ payload.version }}</p>
-      </template>
     </div>
   </div>
 </template>
