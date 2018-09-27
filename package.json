@@ -5,9 +5,9 @@
   "author": "William Durand <will+git@drnd.me>",
   "license": "MPL-2.0",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --hide-modules",
+    "build": "rimraf dist/ && cross-env NODE_ENV=production webpack --hide-modules",
     "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
-    "build:release": "npm run build && node scripts/build-zip.js",
+    "build:release": "npm run build && rimraf dist-zip/ && node scripts/build-zip.js",
     "lint": "eslint --ext .js,.vue src",
     "precommit": "pretty-quick --staged",
     "prettier": "prettier \"src/**/*.{js,vue}\"",
@@ -15,6 +15,7 @@
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
+    "rimraf": "^2.6.2",
     "string-humanize": "^1.0.1",
     "vue": "^2.5.17"
   },
