@@ -8,14 +8,14 @@
       <h3>A/B experiments</h3>
 
       <Loader v-if="loading" />
-      <Table v-if="payload" v-bind:items="experiments" />
+      <Table v-else v-bind:items="experiments" />
     </div>
 
     <div class="feature-flags">
       <h3>Feature flags</h3>
 
       <Loader v-if="loading" />
-      <Table v-if="payload" v-bind:items="featureFlags" />
+      <Table v-else v-bind:items="featureFlags" />
     </div>
 
     <div class="commit">
@@ -23,9 +23,9 @@
       <p><pre>{{ shortCommit }}</pre></p>
     </div>
 
-    <div class="version" v-if="payload.version">
-        <h3>Version</h3>
-        <p class="version">{{ payload.version }}</p>
+    <div class="version" v-if="payload && payload.version">
+      <h3>Version</h3>
+      <p class="version">{{ payload.version }}</p>
     </div>
   </div>
 </template>
@@ -76,16 +76,13 @@ export default {
       const currentTab = tabs[0];
       const { origin } = new URL(currentTab.url);
 
-      browser.runtime.onMessage.addListener((msg) => {
+      browser.runtime.sendMessage({ from: 'popup', origin }).then((msg) => {
         this.loading = false;
 
         if (msg.type === 'success') {
           this.payload = msg.payload;
         }
       });
-
-      // Fetch data.
-      browser.runtime.sendMessage({ from: 'popup', origin });
     });
   },
 };
