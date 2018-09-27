@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js,.vue src",
     "precommit": "pretty-quick --staged",
     "prettier": "prettier \"src/**/*.{js,vue}\" --write",
+    "version": "dot-json src/manifest.json version $(node -p \"require('./package.json').version\") && git add src/manifest.json",
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
+    "dot-json": "^1.0.4",
     "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^3.0.1",
