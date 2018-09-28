@@ -7,7 +7,7 @@
     "64": "icons/icon.png"
   },
   "page_action": {
-    "default_title": "AMO DevTools",
+    "default_title": "amo-info",
     "default_icon": {
       "64": "icons/icon.png"
     },
