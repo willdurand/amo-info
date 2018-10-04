@@ -8,14 +8,14 @@
       <h3>A/B experiments</h3>
 
       <Loader v-if="loading" />
-      <Table v-else v-bind:items="experiments" />
+      <DataTable v-else v-bind:items="experiments" />
     </div>
 
     <div class="feature-flags">
       <h3>Feature flags</h3>
 
       <Loader v-if="loading" />
-      <Table v-else v-bind:items="featureFlags" />
+      <DataTable v-else v-bind:items="featureFlags" />
     </div>
 
     <div class="commit">
@@ -24,21 +24,23 @@
       <p v-else><pre>{{ shortCommit }}</pre></p>
     </div>
 
-    <div class="version" v-if="payload && payload.version">
-      <h3>Version</h3>
-      <p class="version">{{ payload.version }}</p>
-    </div>
+    <Version
+      v-if="payload && payload.version"
+      v-bind:version="payload.version"
+    />
   </div>
 </template>
 
 <script>
 import Loader from './Loader';
 import Table from './Table';
+import Version from './Version';
 
 export default {
   components: {
     Loader,
-    Table,
+    DataTable: Table,
+    Version,
   },
   data() {
     return {
