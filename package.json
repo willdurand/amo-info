@@ -16,6 +16,7 @@
     "watch": "npm run build -- --watch"
   },
   "dependencies": {
+    "string-humanize": "^1.0.1",
     "vue": "^2.5.17"
   },
   "devDependencies": {
@@ -44,7 +45,6 @@
     "pretty-quick": "^1.6.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
-    "string-humanize": "^1.0.1",
     "vue-loader": "^15.4.0",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.16.5",
