@@ -1,15 +1,16 @@
 browser.runtime.onMessage.addListener(({ from, origin }) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (from === 'popup') {
       const options = {};
 
       // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1450649
       if (origin === 'https://addons.mozilla.org') {
+        // eslint-disable-next-line no-console
         console.debug('replacing "origin" because of a FF restriction');
 
         // eslint-disable-next-line no-param-reassign
         origin = `https://cors-anywhere.herokuapp.com/${origin}`;
-        options['headers'] = new Headers({ 'x-requested-with': 'amo-info' });
+        options.headers = new Headers({ 'x-requested-with': 'amo-info' });
       }
 
       return fetch(`${origin}/__frontend_version__`, options)
@@ -18,6 +19,6 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
         .catch((error) => resolve({ type: 'error', error }));
     }
 
-    resolve({ type: 'unknown' });
+    return resolve({ type: 'unknown' });
   });
 });
