@@ -1,7 +1,7 @@
 <template>
   <div class="App">
     <header class="panel-section panel-section-header">
-      <div class="text-section-header">amo-info</div>
+      <div class="text-section-header">amo-info (frontend)</div>
     </header>
 
     <div class="experiments">
