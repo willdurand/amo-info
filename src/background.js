@@ -14,9 +14,16 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
       }
 
       return fetch(`${origin}/__frontend_version__`, options)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP call returned: ${response.status}`);
+          }
+
+          return response;
+        })
         .then((response) => response.json())
         .then((payload) => resolve({ type: 'success', payload }))
-        .catch((error) => resolve({ type: 'error', error }));
+        .catch((error) => resolve({ type: 'error', error: error.toString() }));
     }
 
     return resolve({ type: 'unknown' });

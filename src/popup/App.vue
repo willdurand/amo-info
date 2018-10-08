@@ -20,6 +20,7 @@
 
     <div class="commit">
       <h3>Commit</h3>
+
       <Loader v-if="loading" />
       <p v-else><pre>{{ shortCommit }}</pre></p>
     </div>
@@ -28,6 +29,10 @@
       v-if="payload && payload.version"
       v-bind:version="payload.version"
     />
+
+    <div class="App-errors" v-if="error">
+      <p>{{ error }}</p>
+    </div>
   </div>
 </template>
 
@@ -46,11 +51,12 @@ export default {
     return {
       loading: true,
       payload: null,
+      error: null,
     };
   },
   computed: {
     experiments() {
-      const { experiments } = this.payload || {};
+      const { experiments } = this.payload || { experiments: {} };
 
       return Object.keys(experiments).reduce(
         (array, key) => array.concat({ name: key, enabled: experiments[key] }),
@@ -59,7 +65,7 @@ export default {
     },
     featureFlags() {
       // eslint-disable-next-line camelcase
-      const { feature_flags } = this.payload || {};
+      const { feature_flags } = this.payload || { feature_flags: {} };
 
       return Object.keys(feature_flags).reduce(
         (array, key) =>
@@ -71,7 +77,9 @@ export default {
       );
     },
     shortCommit() {
-      return this.payload ? this.payload.commit.substring(0, 12) : null;
+      return this.payload && this.payload.commit
+        ? this.payload.commit.substring(0, 12)
+        : null;
     },
   },
   mounted() {
@@ -84,6 +92,8 @@ export default {
 
         if (msg.type === 'success') {
           this.payload = msg.payload;
+        } else if (msg.type === 'error') {
+          this.error = msg.error;
         }
       });
     });
@@ -97,6 +107,19 @@ export default {
 
   & > div {
     padding: 0 20px;
+  }
+}
+
+.App-errors {
+  background-color: #a4000f;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #fff;
+  margin-bottom: -13px;
+  max-width: 250px;
+
+  p {
+    padding: 10px 0;
   }
 }
 </style>
