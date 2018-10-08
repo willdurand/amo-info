@@ -30,8 +30,13 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
+  },
   "permissions": [
     "activeTab",
+    "storage",
     "https://addons-dev.allizom.org/*",
     "https://addons.allizom.org/*",
     "https://addons.mozilla.org/*",
