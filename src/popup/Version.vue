@@ -1,6 +1,7 @@
 <template>
   <div class="Version">
-    <h3>Version</h3>
+    <h3>Tag deployed</h3>
+
     <p class="Version-number">
       {{ version }} (<a v-bind:href="pushDocURL">Push Doc</a>)
     </p>

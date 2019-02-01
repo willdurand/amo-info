@@ -1,34 +1,63 @@
 <template>
   <div class="App">
     <header class="panel-section panel-section-header">
-      <div class="text-section-header">amo-info (frontend)</div>
+      <div class="text-section-header">amo-info</div>
     </header>
 
-    <div class="experiments">
-      <h3>A/B experiments</h3>
+    <div class="App-info-panels">
+      <div class="App-info-panel frontend">
+        <h2>addons-frontend</h2>
 
-      <Loader v-if="loading" />
-      <DataTable v-else v-bind:items="experiments" />
+        <div class="experiments">
+          <h3>A/B experiments</h3>
+
+          <Loader v-if="loading" />
+          <Table v-else v-bind:items="experiments" />
+        </div>
+
+        <div class="feature-flags">
+          <h3>Feature flags</h3>
+
+          <Loader v-if="loading" />
+          <Table v-else v-bind:items="featureFlags" />
+        </div>
+
+        <div class="commit">
+          <h3>Commit</h3>
+
+          <Loader v-if="loading" />
+          <p v-else><pre>{{ frontendShortCommit }}</pre></p>
+        </div>
+
+        <Version
+          v-if="frontend && frontend.version"
+          v-bind:version="frontend.version"
+        />
+      </div>
+
+      <div class="App-info-panel server">
+        <h2>addons-server</h2>
+
+        <div class="python-version">
+          <h3>Python</h3>
+
+          <Loader v-if="loading" />
+          <p v-else><pre>{{ server.python }}</pre></p>
+        </div>
+
+        <div class="commit">
+          <h3>Commit</h3>
+
+          <Loader v-if="loading" />
+          <p v-else><pre>{{ serverShortCommit }}</pre></p>
+        </div>
+
+        <Version
+          v-if="server && server.version"
+          v-bind:version="server.version"
+        />
+      </div>
     </div>
-
-    <div class="feature-flags">
-      <h3>Feature flags</h3>
-
-      <Loader v-if="loading" />
-      <DataTable v-else v-bind:items="featureFlags" />
-    </div>
-
-    <div class="commit">
-      <h3>Commit</h3>
-
-      <Loader v-if="loading" />
-      <p v-else><pre>{{ shortCommit }}</pre></p>
-    </div>
-
-    <Version
-      v-if="payload && payload.version"
-      v-bind:version="payload.version"
-    />
 
     <div class="App-errors" v-if="error">
       <p>{{ error }}</p>
@@ -44,19 +73,20 @@ import Version from './Version';
 export default {
   components: {
     Loader,
-    DataTable: Table,
+    Table,
     Version,
   },
   data() {
     return {
-      loading: true,
-      payload: null,
       error: null,
+      frontend: null,
+      loading: true,
+      server: null,
     };
   },
   computed: {
     experiments() {
-      const { experiments } = this.payload || { experiments: {} };
+      const { experiments } = this.frontend || { experiments: {} };
 
       return Object.keys(experiments).reduce(
         (array, key) => array.concat({ name: key, enabled: experiments[key] }),
@@ -65,7 +95,7 @@ export default {
     },
     featureFlags() {
       // eslint-disable-next-line camelcase
-      const { feature_flags } = this.payload || { feature_flags: {} };
+      const { feature_flags } = this.frontend || { feature_flags: {} };
 
       return Object.keys(feature_flags).reduce(
         (array, key) =>
@@ -76,9 +106,14 @@ export default {
         []
       );
     },
-    shortCommit() {
-      return this.payload && this.payload.commit
-        ? this.payload.commit.substring(0, 12)
+    frontendShortCommit() {
+      return this.frontend && this.frontend.commit
+        ? this.frontend.commit.substring(0, 12)
+        : null;
+    },
+    serverShortCommit() {
+      return this.server && this.server.commit
+        ? this.server.commit.substring(0, 12)
         : null;
     },
   },
@@ -87,15 +122,21 @@ export default {
       const currentTab = tabs[0];
       const { origin } = new URL(currentTab.url);
 
-      browser.runtime.sendMessage({ from: 'popup', origin }).then((msg) => {
-        this.loading = false;
+      browser.runtime
+        .sendMessage({ from: 'popup', origin })
+        .then(([frontend, server]) => {
+          this.loading = false;
 
-        if (msg.type === 'success') {
-          this.payload = msg.payload;
-        } else if (msg.type === 'error') {
-          this.error = msg.error;
-        }
-      });
+          if (frontend.type === 'success') {
+            this.frontend = frontend.payload;
+          } else if (frontend.type === 'error') {
+            this.error = frontend.error;
+          }
+
+          if (server.type === 'success') {
+            this.server = server.payload;
+          }
+        });
     });
   },
 };
@@ -103,10 +144,17 @@ export default {
 
 <style lang="scss" scoped>
 .App {
-  min-width: 250px;
+  .App-info-panels {
+    display: flex;
 
-  & > div {
-    padding: 0 20px;
+    .App-info-panel {
+      margin: 0 20px;
+      min-width: 200px;
+
+      h3 {
+        font-weight: 600;
+      }
+    }
   }
 }
 
