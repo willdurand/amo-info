@@ -9,21 +9,21 @@
         <h2>addons-frontend</h2>
 
         <div class="experiments">
-          <h3>A/B experiments</h3>
+          <h3>a/b experiments</h3>
 
           <Loader v-if="loading" />
           <DataTable v-else v-bind:items="experiments" />
         </div>
 
         <div class="feature-flags">
-          <h3>Feature flags</h3>
+          <h3>feature flags</h3>
 
           <Loader v-if="loading" />
           <DataTable v-else v-bind:items="featureFlags" />
         </div>
 
         <div class="commit">
-          <h3>Commit</h3>
+          <h3>commit</h3>
 
           <Loader v-if="loading" />
           <p v-else><pre>{{ frontendShortCommit }}</pre></p>
@@ -39,14 +39,14 @@
         <h2>addons-server</h2>
 
         <div class="python-version">
-          <h3>Python</h3>
+          <h3>python</h3>
 
           <Loader v-if="loading" />
           <p v-else><pre>{{ server.python }}</pre></p>
         </div>
 
         <div class="commit">
-          <h3>Commit</h3>
+          <h3>commit</h3>
 
           <Loader v-if="loading" />
           <p v-else><pre>{{ serverShortCommit }}</pre></p>
@@ -145,6 +145,7 @@ export default {
 <style lang="scss" scoped>
 .App {
   .App-info-panels {
+    -moz-user-select: text;
     display: flex;
 
     .App-info-panel {
@@ -152,7 +153,7 @@ export default {
       min-width: 200px;
 
       h3 {
-        font-weight: 600;
+        font-weight: 500;
       }
     }
   }
