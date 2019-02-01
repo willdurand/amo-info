@@ -42,7 +42,7 @@
           <h3>python</h3>
 
           <Loader v-if="loading" />
-          <p v-else><pre>{{ server.python }}</pre></p>
+          <p v-else><pre>{{ pythonVersion }}</pre></p>
         </div>
 
         <div class="commit">
@@ -59,8 +59,8 @@
       </div>
     </div>
 
-    <div class="App-errors" v-if="error">
-      <p>{{ error }}</p>
+    <div class="App-errors" v-if="errors.length">
+      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
     </div>
   </div>
 </template>
@@ -70,6 +70,10 @@ import Loader from './Loader';
 import DataTable from './DataTable';
 import Version from './Version';
 
+const createError = (error, context) => {
+  return `The ${context} returned an error: ${error.message || error}`;
+};
+
 export default {
   components: {
     Loader,
@@ -78,7 +82,7 @@ export default {
   },
   data() {
     return {
-      error: null,
+      errors: [],
       frontend: null,
       loading: true,
       server: null,
@@ -106,6 +110,9 @@ export default {
         []
       );
     },
+    pythonVersion() {
+      return this.server ? this.server.python : null;
+    },
     frontendShortCommit() {
       return this.frontend && this.frontend.commit
         ? this.frontend.commit.substring(0, 12)
@@ -125,16 +132,19 @@ export default {
       browser.runtime
         .sendMessage({ from: 'popup', origin })
         .then(([frontend, server]) => {
+          this.errors = [];
           this.loading = false;
 
           if (frontend.type === 'success') {
             this.frontend = frontend.payload;
           } else if (frontend.type === 'error') {
-            this.error = frontend.error;
+            this.errors.push(createError(frontend.error, 'frontend'));
           }
 
           if (server.type === 'success') {
             this.server = server.payload;
+          } else if (server.type === 'error') {
+            this.errors.push(createError(server.error, 'server'));
           }
         });
     });
@@ -164,11 +174,10 @@ export default {
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   color: #fff;
-  margin-bottom: -13px;
-  max-width: 250px;
+  padding: 10px;
 
   p {
-    padding: 10px 0;
+    padding: 0 10px 0;
   }
 }
 </style>

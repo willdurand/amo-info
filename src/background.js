@@ -10,7 +10,7 @@ const fetchVersion = ({ endpoint, options }) => {
       })
       .then((response) => response.json())
       .then((payload) => resolve({ type: 'success', payload }))
-      .catch((error) => resolve({ type: 'error', error: error.toString() }));
+      .catch((error) => resolve({ type: 'error', error: error.message }));
   });
 };
 
