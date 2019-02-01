@@ -1,15 +1,18 @@
 <template>
-  <table class="Table">
+  <table class="DataTable">
     <tr v-for="item in items" v-bind:key="item.name">
-      <td class="Table-item-name">
+      <td class="DataTable-item-name">
         {{ item.name | humanize }}
       </td>
       <td
-        class="Table-item-state"
-        v-bind:class="{ 'Table-item-state--enabled': item.enabled }"
+        class="DataTable-item-state"
+        v-bind:class="{ 'DataTable-item-state--enabled': item.enabled }"
       >
         {{ item.enabled ? 'ON' : 'OFF' }}
       </td>
+    </tr>
+    <tr v-if="items.length === 0">
+      <td colspan="2">none</td>
     </tr>
   </table>
 </template>
@@ -32,15 +35,15 @@ export default {
 <style lang="scss" scoped>
 $blue-70: #003eaa;
 
-.Table {
+.DataTable {
   width: 100%;
 }
 
-.Table-item-name {
+.DataTable-item-name {
   padding: 5px 10px 5px 0;
 }
 
-.Table-item-state {
+.DataTable-item-state {
   font-weight: 600;
   text-align: right;
 

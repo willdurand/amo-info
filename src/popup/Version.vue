@@ -1,6 +1,7 @@
 <template>
   <div class="Version">
-    <h3>Version</h3>
+    <h3>tag deployed</h3>
+
     <p class="Version-number">
       {{ version }} (<a v-bind:href="pushDocURL">Push Doc</a>)
     </p>
@@ -30,5 +31,8 @@ export default {
 
 <style lang="scss" scoped>
 .Version {
+  h3 {
+    font-weight: 500;
+  }
 }
 </style>
