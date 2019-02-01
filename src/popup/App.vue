@@ -12,14 +12,14 @@
           <h3>A/B experiments</h3>
 
           <Loader v-if="loading" />
-          <Table v-else v-bind:items="experiments" />
+          <DataTable v-else v-bind:items="experiments" />
         </div>
 
         <div class="feature-flags">
           <h3>Feature flags</h3>
 
           <Loader v-if="loading" />
-          <Table v-else v-bind:items="featureFlags" />
+          <DataTable v-else v-bind:items="featureFlags" />
         </div>
 
         <div class="commit">
@@ -67,13 +67,13 @@
 
 <script>
 import Loader from './Loader';
-import Table from './Table';
+import DataTable from './DataTable';
 import Version from './Version';
 
 export default {
   components: {
     Loader,
-    Table,
+    DataTable,
     Version,
   },
   data() {
