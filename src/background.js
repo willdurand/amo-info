@@ -1,3 +1,5 @@
+import { projectsByOrigin } from './settings';
+
 const fetchVersion = ({ endpoint, options }) => {
   return new Promise((resolve) => {
     return fetch(endpoint, options)
@@ -16,16 +18,27 @@ const fetchVersion = ({ endpoint, options }) => {
 
 browser.runtime.onMessage.addListener(({ from, origin }) => {
   if (from !== 'popup') {
-    return Promise.resolve({ type: 'unknown' });
+    return Promise.resolve({ type: 'error', error: 'invalid "from" value' });
   }
 
   return browser.storage.sync
     .get('isCorsAnywhereEnabled')
     .then(({ isCorsAnywhereEnabled }) => {
+      const config = projectsByOrigin[origin] || null;
+
+      if (!config) {
+        return Promise.resolve({
+          type: 'error',
+          error: `config not found for origin = "${origin}"`,
+        });
+      }
+
       const options = {};
+      let appOrigin = config.appOrigin || origin;
+      let apiOrigin = config.apiOrigin || origin;
 
       // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1450649
-      if (!!isCorsAnywhereEnabled || origin === 'https://addons.mozilla.org') {
+      if (!!isCorsAnywhereEnabled || origin.includes('addons.mozilla.org')) {
         if (isCorsAnywhereEnabled) {
           // eslint-disable-next-line no-console
           console.debug('replacing "origin" because of user preference');
@@ -35,13 +48,22 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
         }
 
         // eslint-disable-next-line no-param-reassign
-        origin = `https://cors-anywhere.herokuapp.com/${origin}`;
+        appOrigin = `https://cors-anywhere.herokuapp.com/${appOrigin}`;
+        apiOrigin = `https://cors-anywhere.herokuapp.com/${apiOrigin}`;
         options.headers = new Headers({ 'x-requested-with': 'amo-info' });
       }
 
+      console.log({ appOrigin, apiOrigin });
+
       return Promise.all([
-        fetchVersion({ endpoint: `${origin}/__frontend_version__`, options }),
-        fetchVersion({ endpoint: `${origin}/__version__`, options }),
+        fetchVersion({
+          endpoint: `${appOrigin}/${config.appVersion}`,
+          options,
+        }),
+        fetchVersion({
+          endpoint: `${apiOrigin}/${config.apiVersion}`,
+          options,
+        }),
       ]);
     });
 });

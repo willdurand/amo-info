@@ -19,12 +19,12 @@
     "browser_style": true,
     "default_popup": "popup/popup.html",
     "show_matches": [
+      "https://*.addons-dev.allizom.org/*",
+      "https://*.addons.allizom.org/*",
+      "https://*.addons.mozilla.org/*",
       "https://addons-dev.allizom.org/*",
       "https://addons.allizom.org/*",
-      "https://addons.mozilla.org/*",
-      "https://discovery.addons-dev.allizom.org/*",
-      "https://discovery.addons.allizom.org/*",
-      "https://discovery.addons.mozilla.org/*"
+      "https://addons.mozilla.org/*"
     ]
   },
   "background": {
@@ -37,11 +37,11 @@
   "permissions": [
     "activeTab",
     "storage",
+    "https://*.addons-dev.allizom.org/*",
+    "https://*.addons.allizom.org/*",
+    "https://*.addons.mozilla.org/*",
     "https://addons-dev.allizom.org/*",
     "https://addons.allizom.org/*",
-    "https://addons.mozilla.org/*",
-    "https://discovery.addons-dev.allizom.org/*",
-    "https://discovery.addons.allizom.org/*",
-    "https://discovery.addons.mozilla.org/*"
+    "https://addons.mozilla.org/*"
   ]
 }
