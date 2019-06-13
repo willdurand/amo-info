@@ -6,10 +6,7 @@
 
     <div class="App-info-panels">
       <div class="App-info-panel app">
-        <h2 v-if="app">{{ config.appName }} ({{ config.env }})</h2>
-        <h2 class="loading" v-else>
-          <Skeleton />
-        </h2>
+        <ProjectName v-bind:name="config.appName" v-bind:env="config.env" />
 
         <div class="experiments" v-if="config.hasExperiments">
           <h3>a/b experiments</h3>
@@ -25,34 +22,13 @@
           <DataTable v-else v-bind:items="featureFlags" />
         </div>
 
-        <div class="commit">
-          <h3>commit</h3>
-
-          <div>
-            <pre class="loading" v-if="loading">
-              <Skeleton />
-            </pre>
-            <pre v-else>{{ appShortCommit }}</pre>
-          </div>
-        </div>
+        <Commit v-bind:sha="appShortCommit" />
 
         <Version v-if="app && app.version" v-bind:version="app.version" />
 
         <div class="repo" v-if="config.repo">
           <p class="repo-url">
-            <svg
-              class="github-icon"
-              viewBox="0 0 16 16"
-              version="1.1"
-              width="16"
-              height="16"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-              ></path>
-            </svg>
+            <GitHubLogo class="github-logo" />
 
             <a v-bind:href="'https://github.com/mozilla/' + config.repo">
               {{ config.repo }}
@@ -62,21 +38,9 @@
       </div>
 
       <div class="App-info-panel api">
-        <h2 v-if="api">{{ config.apiName }}</h2>
-        <h2 v-else>
-          <Skeleton />
-        </h2>
+        <ProjectName v-bind:name="config.apiName" />
 
-        <div class="commit">
-          <h3>commit</h3>
-
-          <div>
-            <pre class="loading" v-if="loading">
-              <Skeleton />
-            </pre>
-            <pre v-else>{{ apiShortCommit }}</pre>
-          </div>
-        </div>
+        <Commit v-bind:sha="apiShortCommit" />
 
         <div class="python-version">
           <h3>python</h3>
@@ -100,8 +64,11 @@
 </template>
 
 <script>
+import Commit from './Commit';
 import DataTable from './DataTable';
+import GitHubLogo from './GitHubLogo';
 import Loader from './Loader';
+import ProjectName from './ProjectName';
 import Skeleton from './Skeleton';
 import Version from './Version';
 import { projectsByOrigin, defaultConfig } from '../settings';
@@ -112,8 +79,11 @@ const createError = (error, context) => {
 
 export default {
   components: {
+    Commit,
     DataTable,
+    GitHubLogo,
     Loader,
+    ProjectName,
     Skeleton,
     Version,
   },
@@ -238,18 +208,6 @@ export default {
 
   p {
     padding: 0 10px 0;
-  }
-}
-
-h2 {
-  &.loading {
-    width: 90%;
-  }
-}
-
-.commit {
-  .loading {
-    width: 60%;
   }
 }
 
