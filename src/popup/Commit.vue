@@ -4,7 +4,9 @@
 
     <div>
       <Skeleton class="skeleton" v-if="!sha" />
-      <pre v-else>{{ sha }}</pre>
+      <a v-else :href="'https://github.com/mozilla/' + repo + '/commit/' + sha">
+        <pre>{{ sha }}</pre>
+      </a>
     </div>
   </div>
 </template>
@@ -18,6 +20,7 @@ export default {
   },
   props: {
     sha: String,
+    repo: String,
   },
 };
 </script>

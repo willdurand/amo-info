@@ -6,7 +6,8 @@ const projects = {
     appVersion: '__version__',
     hasExperiments: false,
     hasFeatureFlags: false,
-    repo: 'addons-code-manager',
+    appRepo: 'addons-code-manager',
+    apiRepo: 'addons-server',
   },
   discovery: {
     apiName: 'addons-server',
@@ -15,7 +16,8 @@ const projects = {
     appVersion: '__frontend_version__',
     hasExperiments: true,
     hasFeatureFlags: true,
-    repo: 'addons-frontend',
+    appRepo: 'addons-frontend',
+    apiRepo: 'addons-server',
   },
   frontend: {
     apiName: 'addons-server',
@@ -24,7 +26,8 @@ const projects = {
     appVersion: '__frontend_version__',
     hasExperiments: true,
     hasFeatureFlags: true,
-    repo: 'addons-frontend',
+    appRepo: 'addons-frontend',
+    apiRepo: 'addons-server',
   },
 };
 

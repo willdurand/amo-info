@@ -22,16 +22,16 @@
           <DataTable v-else v-bind:items="featureFlags" />
         </div>
 
-        <Commit v-bind:sha="appShortCommit" />
+        <Commit v-bind:sha="appShortCommit" v-bind:repo="config.appRepo" />
 
         <Version v-if="app && app.version" v-bind:version="app.version" />
 
-        <div class="repo" v-if="config.repo">
+        <div class="repo" v-if="config.appRepo">
           <p class="repo-url">
             <GitHubLogo class="github-logo" />
 
-            <a v-bind:href="'https://github.com/mozilla/' + config.repo">
-              {{ config.repo }}
+            <a v-bind:href="'https://github.com/mozilla/' + config.appRepo">
+              {{ config.appRepo }}
             </a>
           </p>
         </div>
@@ -40,7 +40,7 @@
       <div class="App-info-panel api">
         <ProjectName v-bind:name="config.apiName" />
 
-        <Commit v-bind:sha="apiShortCommit" />
+        <Commit v-bind:sha="apiShortCommit" v-bind:repo="config.apiRepo" />
 
         <div class="python-version">
           <h3>python</h3>
