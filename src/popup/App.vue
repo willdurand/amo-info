@@ -6,7 +6,10 @@
 
     <div class="App-info-panels">
       <div class="App-info-panel app">
-        <h2>{{ config.appName }} ({{ config.env }})</h2>
+        <h2 v-if="app">{{ config.appName }} ({{ config.env }})</h2>
+        <h2 class="loading" v-else>
+          <Skeleton />
+        </h2>
 
         <div class="experiments" v-if="config.hasExperiments">
           <h3>a/b experiments</h3>
@@ -25,9 +28,11 @@
         <div class="commit">
           <h3>commit</h3>
 
-          <Loader v-if="loading" />
-          <div v-else>
-            <pre>{{ appShortCommit }}</pre>
+          <div>
+            <pre class="loading" v-if="loading">
+              <Skeleton />
+            </pre>
+            <pre v-else>{{ appShortCommit }}</pre>
           </div>
         </div>
 
@@ -57,23 +62,30 @@
       </div>
 
       <div class="App-info-panel api">
-        <h2>{{ config.apiName }}</h2>
+        <h2 v-if="api">{{ config.apiName }}</h2>
+        <h2 v-else>
+          <Skeleton />
+        </h2>
 
         <div class="commit">
           <h3>commit</h3>
 
-          <Loader v-if="loading" />
-          <div v-else>
-            <pre>{{ apiShortCommit }}</pre>
+          <div>
+            <pre class="loading" v-if="loading">
+              <Skeleton />
+            </pre>
+            <pre v-else>{{ apiShortCommit }}</pre>
           </div>
         </div>
 
         <div class="python-version">
           <h3>python</h3>
 
-          <Loader v-if="loading" />
-          <div v-else>
-            <pre>{{ pythonVersion }}</pre>
+          <div>
+            <pre class="loading" v-if="loading">
+              <Skeleton />
+            </pre>
+            <pre v-else>{{ pythonVersion }}</pre>
           </div>
         </div>
 
@@ -88,10 +100,11 @@
 </template>
 
 <script>
-import Loader from './Loader';
 import DataTable from './DataTable';
+import Loader from './Loader';
+import Skeleton from './Skeleton';
 import Version from './Version';
-import { projectsByOrigin, unknownConfig } from '../settings';
+import { projectsByOrigin, defaultConfig } from '../settings';
 
 const createError = (error, context) => {
   return `The ${context} returned an error: ${error.message || error}`;
@@ -99,15 +112,16 @@ const createError = (error, context) => {
 
 export default {
   components: {
-    Loader,
     DataTable,
+    Loader,
+    Skeleton,
     Version,
   },
   data() {
     return {
       api: null,
       app: null,
-      config: unknownConfig,
+      config: defaultConfig,
       errors: [],
       loading: true,
     };
@@ -161,10 +175,11 @@ export default {
       const currentTab = tabs[0];
       const { origin } = new URL(currentTab.url);
 
+      this.config = projectsByOrigin[origin] || defaultConfig;
+
       browser.runtime
         .sendMessage({ from: 'popup', origin })
         .then((response) => {
-          this.config = projectsByOrigin[origin] || unknownConfig;
           this.errors = [];
           this.loading = false;
 
@@ -205,7 +220,7 @@ export default {
 
     .App-info-panel {
       margin: 0 20px;
-      min-width: 200px;
+      min-width: 230px;
 
       h3 {
         font-weight: 500;
@@ -223,6 +238,24 @@ export default {
 
   p {
     padding: 0 10px 0;
+  }
+}
+
+h2 {
+  &.loading {
+    width: 90%;
+  }
+}
+
+.commit {
+  .loading {
+    width: 60%;
+  }
+}
+
+.python-version {
+  .loading {
+    width: 20%;
   }
 }
 

@@ -34,7 +34,7 @@ const Env = {
   STAGE: 'stage',
 };
 
-export const unknownConfig = {
+export const defaultConfig = {
   apiName: 'api',
   appName: 'app',
   hasExperiments: false,
