@@ -54,7 +54,6 @@
 <script>
 import Commit from './Commit';
 import DataTable from './DataTable';
-import Loader from './Loader';
 import ProjectName from './ProjectName';
 import ProjectRepo from './ProjectRepo';
 import Skeleton from './Skeleton';
@@ -69,7 +68,6 @@ export default {
   components: {
     Commit,
     DataTable,
-    Loader,
     ProjectName,
     ProjectRepo,
     Skeleton,
