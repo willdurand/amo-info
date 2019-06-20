@@ -29,6 +29,27 @@ const projects = {
     appRepo: 'addons-frontend',
     apiRepo: 'addons-server',
   },
+  reviewerTools: {
+    apiName: 'addons-server',
+    apiVersion: '__version__',
+    appName: 'reviewer tools',
+    appVersion: '__version__',
+    hasExperiments: false,
+    hasFeatureFlags: false,
+    appRepo: 'addons-server',
+    apiRepo: 'addons-server',
+  },
+  extensionWorkshop: {
+    apiName: null,
+    apiVersion: null,
+    appName: 'extension workshop',
+    appVersion: '__version__',
+    hasExperiments: false,
+    hasFeatureFlags: false,
+    appRepo: 'extension-workshop',
+    apiRepo: null,
+    pushDoc: false,
+  },
 };
 
 const Env = {
@@ -82,6 +103,30 @@ export const projectsByOrigin = {
   },
   'https://discovery.addons.mozilla.org': {
     ...projects.discovery,
+    env: Env.PROD,
+  },
+  'https://reviewers.addons-dev.allizom.org': {
+    ...projects.reviewerTools,
+    env: Env.DEV,
+  },
+  'https://reviewers.addons.allizom.org': {
+    ...projects.reviewerTools,
+    env: Env.STAGE,
+  },
+  'https://reviewers.addons.mozilla.org': {
+    ...projects.reviewerTools,
+    env: Env.PROD,
+  },
+  'https://extensionworkshop-dev.allizom.org': {
+    ...projects.extensionWorkshop,
+    env: Env.DEV,
+  },
+  'https://extensionworkshop.allizom.org': {
+    ...projects.extensionWorkshop,
+    env: Env.STAGE,
+  },
+  'https://extensionworkshop.com': {
+    ...projects.extensionWorkshop,
     env: Env.PROD,
   },
 };

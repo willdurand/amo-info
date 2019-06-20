@@ -60,10 +60,12 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
           endpoint: `${appOrigin}/${config.appVersion}`,
           options,
         }),
-        fetchVersion({
-          endpoint: `${apiOrigin}/${config.apiVersion}`,
-          options,
-        }),
+        config.apiName === null
+          ? Promise.resolve(null)
+          : fetchVersion({
+              endpoint: `${apiOrigin}/${config.apiVersion}`,
+              options,
+            }),
       ]);
     });
 });

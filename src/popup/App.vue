@@ -22,12 +22,16 @@
 
         <Commit v-bind:sha="appShortCommit" v-bind:repo="config.appRepo" />
 
-        <Version v-if="app && app.version" v-bind:version="app.version" />
+        <Version
+          v-if="app && app.version"
+          v-bind:version="app.version"
+          v-bind:no-push-doc="config.pushDoc === false"
+        />
 
         <ProjectRepo v-bind:repository="config.appRepo" />
       </div>
 
-      <div class="App-info-panel api">
+      <div class="App-info-panel api" v-if="config.apiName">
         <ProjectName v-bind:name="config.apiName" />
 
         <Commit v-bind:sha="apiShortCommit" v-bind:repo="config.apiRepo" />
