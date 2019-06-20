@@ -5,7 +5,7 @@
     <div>
       <Skeleton class="skeleton" v-if="!sha" />
       <a v-else :href="'https://github.com/mozilla/' + repo + '/commit/' + sha">
-        <pre>{{ sha }}</pre>
+        {{ sha }}
       </a>
     </div>
   </div>
@@ -27,6 +27,11 @@ export default {
 
 <style lang="scss" scoped>
 .commit {
+  h3 {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
   .skeleton {
     width: 60%;
   }

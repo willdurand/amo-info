@@ -11,30 +11,20 @@
         <div class="experiments" v-if="config.hasExperiments">
           <h3>a/b experiments</h3>
 
-          <Loader v-if="loading" />
-          <DataTable v-else v-bind:items="experiments" />
+          <DataTable v-bind:items="experiments" />
         </div>
 
         <div class="feature-flags" v-if="config.hasFeatureFlags">
           <h3>feature flags</h3>
 
-          <Loader v-if="loading" />
-          <DataTable v-else v-bind:items="featureFlags" />
+          <DataTable v-bind:items="featureFlags" />
         </div>
 
         <Commit v-bind:sha="appShortCommit" v-bind:repo="config.appRepo" />
 
         <Version v-if="app && app.version" v-bind:version="app.version" />
 
-        <div class="repo" v-if="config.appRepo">
-          <p class="repo-url">
-            <GitHubLogo class="github-logo" />
-
-            <a v-bind:href="'https://github.com/mozilla/' + config.appRepo">
-              {{ config.appRepo }}
-            </a>
-          </p>
-        </div>
+        <ProjectRepo v-bind:repository="config.appRepo" />
       </div>
 
       <div class="App-info-panel api">
@@ -46,9 +36,7 @@
           <h3>python</h3>
 
           <div>
-            <pre class="loading" v-if="loading">
-              <Skeleton />
-            </pre>
+            <Skeleton v-if="!pythonVersion" />
             <pre v-else>{{ pythonVersion }}</pre>
           </div>
         </div>
@@ -66,9 +54,9 @@
 <script>
 import Commit from './Commit';
 import DataTable from './DataTable';
-import GitHubLogo from './GitHubLogo';
 import Loader from './Loader';
 import ProjectName from './ProjectName';
+import ProjectRepo from './ProjectRepo';
 import Skeleton from './Skeleton';
 import Version from './Version';
 import { projectsByOrigin, defaultConfig } from '../settings';
@@ -81,9 +69,9 @@ export default {
   components: {
     Commit,
     DataTable,
-    GitHubLogo,
     Loader,
     ProjectName,
+    ProjectRepo,
     Skeleton,
     Version,
   },
@@ -101,7 +89,7 @@ export default {
       const experiments = this.app && this.app.experiments;
 
       if (!experiments) {
-        return [];
+        return null;
       }
 
       return Object.keys(experiments).reduce(
@@ -114,7 +102,7 @@ export default {
       const feature_flags = this.app && this.app.feature_flags;
 
       if (!feature_flags) {
-        return [];
+        return null;
       }
 
       return Object.keys(feature_flags).reduce(
@@ -154,7 +142,7 @@ export default {
           this.loading = false;
 
           if (response.type === 'error') {
-            this.errors.push(createError(response.error, 'other'));
+            this.errors.push(createError(response.error, 'add-on'));
             return;
           }
 
@@ -182,7 +170,33 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import 'photon-colors/photon-colors.scss';
+
+body {
+  color: $grey-90;
+  font-family: 'Fira Sans';
+  font-size: 13px;
+  font-weight: 400;
+}
+
+a {
+  color: $blue-60;
+
+  &:active {
+    color: $blue-70;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3);
+  }
+}
+
+.text-section-header {
+  font-size: 28px;
+  font-weight: 300;
+}
+
 .App {
   .App-info-panels {
     -moz-user-select: text;
@@ -190,9 +204,11 @@ export default {
 
     .App-info-panel {
       margin: 0 20px;
+      min-height: 200px;
       min-width: 230px;
 
       h3 {
+        font-size: 17px;
         font-weight: 500;
       }
     }
@@ -200,10 +216,10 @@ export default {
 }
 
 .App-errors {
-  background-color: #a4000f;
+  background-color: $red-60;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  color: #fff;
+  color: $white-100;
   padding: 10px;
 
   p {
@@ -212,22 +228,8 @@ export default {
 }
 
 .python-version {
-  .loading {
+  .skeleton {
     width: 20%;
-  }
-}
-
-.repo {
-  margin-top: 30px;
-}
-
-.repo-url {
-  align-items: center;
-  display: flex;
-
-  .github-icon {
-    margin-top: 3px;
-    margin-right: 5px;
   }
 }
 </style>

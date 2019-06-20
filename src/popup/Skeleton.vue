@@ -6,9 +6,10 @@
 export default {};
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import 'photon-colors/photon-colors.scss';
+
 $border-radius: 0.25rem;
-$light-gray: #ededf0;
 
 .skeleton {
   animation: pulse 1s infinite ease-in-out;
@@ -19,13 +20,13 @@ $light-gray: #ededf0;
 
 @keyframes pulse {
   0% {
-    background-color: rgba($light-gray, 0.5);
+    background-color: rgba($grey-20, 0.5);
   }
   50% {
-    background-color: rgba($light-gray, 1);
+    background-color: rgba($grey-20, 1);
   }
   100% {
-    background-color: rgba($light-gray, 0.5);
+    background-color: rgba($grey-20, 0.5);
   }
 }
 </style>

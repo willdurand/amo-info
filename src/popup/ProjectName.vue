@@ -19,6 +19,9 @@ export default {
 
 <style lang="scss" scoped>
 h2 {
+  font-size: 22px;
+  font-weight: 300;
+
   &.loading {
     width: 90%;
   }

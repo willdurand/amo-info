@@ -3,7 +3,7 @@
     <h3>tag deployed</h3>
 
     <p class="Version-number">
-      {{ version }} (<a v-bind:href="pushDocURL">Push Doc</a>)
+      {{ version }} &mdash; <a v-bind:href="pushDocURL">Push Doc</a>
     </p>
   </div>
 </template>
@@ -32,6 +32,7 @@ export default {
 <style lang="scss" scoped>
 .Version {
   h3 {
+    font-size: 17px;
     font-weight: 500;
   }
 }
