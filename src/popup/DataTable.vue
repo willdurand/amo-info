@@ -64,7 +64,7 @@ export default {
   text-align: right;
 
   &--enabled {
-    color: $blue-70;
+    color: $green-70;
   }
 }
 </style>

@@ -22,7 +22,7 @@
 
         <Commit v-bind:sha="appShortCommit" v-bind:repo="config.appRepo" />
 
-        <Version
+        <ProjectVersion
           v-if="app && app.version"
           v-bind:version="app.version"
           v-bind:no-push-doc="config.pushDoc === false"
@@ -45,7 +45,19 @@
           </div>
         </div>
 
-        <Version v-if="api && api.version" v-bind:version="api.version" />
+        <div class="django-version">
+          <h3>django</h3>
+
+          <div>
+            <Skeleton v-if="!djangoVersion" />
+            <pre v-else>{{ djangoVersion }}</pre>
+          </div>
+        </div>
+
+        <ProjectVersion
+          v-if="api && api.version"
+          v-bind:version="api.version"
+        />
       </div>
     </div>
 
@@ -60,8 +72,8 @@ import Commit from './Commit';
 import DataTable from './DataTable';
 import ProjectName from './ProjectName';
 import ProjectRepo from './ProjectRepo';
+import ProjectVersion from './ProjectVersion';
 import Skeleton from './Skeleton';
-import Version from './Version';
 import { projectsByOrigin, defaultConfig } from '../settings';
 
 const createError = (error, context) => {
@@ -74,8 +86,8 @@ export default {
     DataTable,
     ProjectName,
     ProjectRepo,
+    ProjectVersion,
     Skeleton,
-    Version,
   },
   data() {
     return {
@@ -118,6 +130,9 @@ export default {
     },
     pythonVersion() {
       return this.api ? this.api.python : null;
+    },
+    djangoVersion() {
+      return this.api ? this.api.django : null;
     },
     appShortCommit() {
       return this.app && this.app.commit
@@ -229,6 +244,7 @@ a {
   }
 }
 
+.django-version,
 .python-version {
   .skeleton {
     width: 20%;
