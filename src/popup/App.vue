@@ -34,25 +34,11 @@
       <div class="App-info-panel api" v-if="config.apiName">
         <ProjectName v-bind:name="config.apiName" />
 
+        <Version title="python" v-bind:value="pythonVersion" />
+
+        <Version title="django" v-bind:value="djangoVersion" />
+
         <Commit v-bind:sha="apiShortCommit" v-bind:repo="config.apiRepo" />
-
-        <div class="python-version">
-          <h3>python</h3>
-
-          <div>
-            <Skeleton v-if="!pythonVersion" />
-            <pre v-else>{{ pythonVersion }}</pre>
-          </div>
-        </div>
-
-        <div class="django-version">
-          <h3>django</h3>
-
-          <div>
-            <Skeleton v-if="!djangoVersion" />
-            <pre v-else>{{ djangoVersion }}</pre>
-          </div>
-        </div>
 
         <ProjectVersion
           v-if="api && api.version"
@@ -74,6 +60,7 @@ import ProjectName from './ProjectName';
 import ProjectRepo from './ProjectRepo';
 import ProjectVersion from './ProjectVersion';
 import Skeleton from './Skeleton';
+import Version from './Version';
 import { projectsByOrigin, defaultConfig } from '../settings';
 
 const createError = (error, context) => {
@@ -88,6 +75,7 @@ export default {
     ProjectRepo,
     ProjectVersion,
     Skeleton,
+    Version,
   },
   data() {
     return {
@@ -241,13 +229,6 @@ a {
 
   p {
     padding: 0 10px 0;
-  }
-}
-
-.django-version,
-.python-version {
-  .skeleton {
-    width: 20%;
   }
 }
 </style>
