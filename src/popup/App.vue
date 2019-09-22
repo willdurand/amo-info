@@ -59,7 +59,6 @@ import DataTable from './DataTable';
 import ProjectName from './ProjectName';
 import ProjectRepo from './ProjectRepo';
 import ProjectVersion from './ProjectVersion';
-import Skeleton from './Skeleton';
 import Version from './Version';
 import { projectsByOrigin, defaultConfig } from '../settings';
 
@@ -74,7 +73,6 @@ export default {
     ProjectName,
     ProjectRepo,
     ProjectVersion,
-    Skeleton,
     Version,
   },
   data() {
@@ -103,10 +101,12 @@ export default {
       // eslint-disable-next-line camelcase
       const feature_flags = this.app && this.app.feature_flags;
 
+      // eslint-disable-next-line camelcase
       if (!feature_flags) {
         return null;
       }
 
+      // eslint-disable-next-line camelcase
       return Object.keys(feature_flags).reduce(
         (array, key) =>
           array.concat({

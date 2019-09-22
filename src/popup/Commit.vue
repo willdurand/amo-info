@@ -4,7 +4,11 @@
 
     <div>
       <Skeleton class="skeleton" v-if="!sha" />
-      <a v-else :href="'https://github.com/mozilla/' + repo + '/commit/' + sha">
+      <a
+        v-else
+        :href="'https://github.com/mozilla/' + repo + '/commit/' + sha"
+        title="Go to the deployed commit on GitHub"
+      >
         {{ sha }}
       </a>
     </div>

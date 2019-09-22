@@ -53,8 +53,6 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
         options.headers = new Headers({ 'x-requested-with': 'amo-info' });
       }
 
-      console.log({ appOrigin, apiOrigin });
-
       return Promise.all([
         fetchVersion({
           endpoint: `${appOrigin}/${config.appVersion}`,

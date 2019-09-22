@@ -1,7 +1,7 @@
 <template>
   <table class="DataTable">
     <template v-if="!items">
-      <tr v-for="n in 2">
+      <tr v-for="n in 2" v-bind:key="'skeleton-' + n">
         <td class="DataTable-item-name">
           <Skeleton />
         </td>
