@@ -41,7 +41,7 @@ export default {
       return this.version.replace(/(\d+).(\d+).(\d+)(-\d+)?/, '$1.$2.$3');
     },
     pushDocURL() {
-      const filename = `${this.milestone.replace('.', '/')}.md`;
+      const filename = `${this.milestone.replace(/\./g, '/')}.md`;
 
       return `${PUSH_DOC_BASE_URL}/${filename}`;
     },
