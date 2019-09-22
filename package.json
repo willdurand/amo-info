@@ -1,6 +1,6 @@
 {
   "name": "amo-info",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "An extension to show information about AMO related services.",
   "author": "William Durand <will+git@drnd.me>",
   "license": "MPL-2.0",
