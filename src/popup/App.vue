@@ -24,8 +24,9 @@
 
         <ProjectVersion
           v-if="app && app.version"
-          v-bind:version="app.version"
+          v-bind:no-milestone="config.hasMilestone === false"
           v-bind:no-push-doc="config.pushDoc === false"
+          v-bind:version="app.version"
         />
 
         <ProjectRepo v-bind:repository="config.appRepo" />
@@ -42,6 +43,7 @@
 
         <ProjectVersion
           v-if="api && api.version"
+          v-bind:no-milestone="config.hasMilestone === false"
           v-bind:version="api.version"
         />
       </div>

@@ -12,7 +12,7 @@
         </a>
       </template>
     </p>
-    <p class="ProjectVersion-pm-milestone">
+    <p class="ProjectVersion-pm-milestone" v-if="!noMilestone">
       🌟
       <a
         v-bind:href="pmMilestoneURL"
@@ -33,6 +33,7 @@ const PM_MILESTONE_URL_PATTERN =
 
 export default {
   props: {
+    noMilestone: Boolean,
     noPushDoc: Boolean,
     version: String,
   },

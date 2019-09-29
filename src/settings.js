@@ -49,6 +49,7 @@ const projects = {
     appRepo: 'extension-workshop',
     apiRepo: null,
     pushDoc: false,
+    hasMilestone: false,
   },
 };
 
