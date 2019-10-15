@@ -1,7 +1,7 @@
 <template>
-  <div class="repo">
-    <p class="repo-url">
-      <GitHubLogo class="github-logo" />
+  <div class="ProjectRepo column">
+    <p class="ProjectRepo-url">
+      <GitHubLogo />
 
       <a
         v-if="repository"
@@ -30,11 +30,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.repo {
-  margin-top: 30px;
+.ProjectRepo {
 }
 
-.repo-url {
+.ProjectRepo-url {
   align-items: center;
   display: flex;
 

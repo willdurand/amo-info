@@ -57,5 +57,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // always use a body
     'arrow-body-style': 'off',
+    // the webextension is compiled so all dependencies are dev deps.
+    'import/no-extraneous-dependencies': 'off',
   },
 };

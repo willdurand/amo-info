@@ -1,56 +1,69 @@
 <template>
-  <div class="App">
-    <header class="panel-section panel-section-header">
-      <div class="text-section-header">amo-info</div>
-    </header>
+  <div class="App section">
+    <div class="container">
+      <h1 class="App-title title">amo-info</h1>
 
-    <div class="App-info-panels">
-      <div class="App-info-panel app">
-        <ProjectName v-bind:name="config.appName" v-bind:env="config.env" />
-
-        <div class="experiments" v-if="config.hasExperiments">
-          <h3>a/b experiments</h3>
-
-          <DataTable v-bind:items="experiments" />
-        </div>
-
-        <div class="feature-flags" v-if="config.hasFeatureFlags">
-          <h3>feature flags</h3>
-
-          <DataTable v-bind:items="featureFlags" />
-        </div>
-
-        <Commit v-bind:sha="appShortCommit" v-bind:repo="config.appRepo" />
-
-        <ProjectVersion
-          v-if="app && app.version"
-          v-bind:no-milestone="config.hasMilestone === false"
-          v-bind:no-push-doc="config.pushDoc === false"
-          v-bind:version="app.version"
-        />
-
-        <ProjectRepo v-bind:repository="config.appRepo" />
+      <div class="notification is-danger" v-if="errors.length">
+        <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
       </div>
 
-      <div class="App-info-panel api" v-if="config.apiName">
-        <ProjectName v-bind:name="config.apiName" />
-
-        <Version title="python" v-bind:value="pythonVersion" />
-
-        <Version title="django" v-bind:value="djangoVersion" />
-
-        <Commit v-bind:sha="apiShortCommit" v-bind:repo="config.apiRepo" />
-
-        <ProjectVersion
-          v-if="api && api.version"
-          v-bind:no-milestone="config.hasMilestone === false"
-          v-bind:version="api.version"
-        />
+      <div class="tabs is-toggle is-fullwidth">
+        <ul>
+          <li :class="[currentTab === 'app' ? 'is-active' : '']">
+            <a @click="currentTab = 'app'">{{ config.appName }}</a>
+          </li>
+          <li
+            v-if="config.apiName"
+            :class="[currentTab === 'api' ? 'is-active' : '']"
+          >
+            <a @click="currentTab = 'api'">{{ config.apiName }}</a>
+          </li>
+        </ul>
       </div>
-    </div>
 
-    <div class="App-errors" v-if="errors.length">
-      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+      <div class="App-info-panel columns">
+        <Value title="environment" v-bind:value="config.env" />
+
+        <template v-if="currentTab === 'app'">
+          <div class="experiments column" v-if="config.hasExperiments">
+            <h3>a/b experiments</h3>
+
+            <DataTable v-bind:items="experiments" />
+          </div>
+
+          <div class="feature-flags column" v-if="config.hasFeatureFlags">
+            <h3>feature flags</h3>
+
+            <DataTable v-bind:items="featureFlags" />
+          </div>
+
+          <Commit v-bind:sha="appCommit" v-bind:repo="config.appRepo" />
+
+          <ProjectVersion
+            v-if="app && app.version"
+            v-bind:no-milestone="config.hasMilestone === false"
+            v-bind:no-push-doc="config.pushDoc === false"
+            v-bind:version="app.version"
+          />
+
+          <ProjectRepo v-bind:repository="config.appRepo" />
+        </template>
+        <template v-else>
+          <Value title="python" v-bind:value="pythonVersion" />
+
+          <Value title="django" v-bind:value="djangoVersion" />
+
+          <Commit v-bind:sha="apiCommit" v-bind:repo="config.apiRepo" />
+
+          <ProjectVersion
+            v-if="api && api.version"
+            v-bind:no-milestone="config.hasMilestone === false"
+            v-bind:version="api.version"
+          />
+
+          <ProjectRepo v-bind:repository="config.apiRepo" />
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -58,10 +71,9 @@
 <script>
 import Commit from './Commit';
 import DataTable from './DataTable';
-import ProjectName from './ProjectName';
 import ProjectRepo from './ProjectRepo';
 import ProjectVersion from './ProjectVersion';
-import Version from './Version';
+import Value from './Value';
 import { projectsByOrigin, defaultConfig } from '../settings';
 
 const createError = (error, context) => {
@@ -72,16 +84,16 @@ export default {
   components: {
     Commit,
     DataTable,
-    ProjectName,
     ProjectRepo,
     ProjectVersion,
-    Version,
+    Value,
   },
   data() {
     return {
       api: null,
       app: null,
       config: defaultConfig,
+      currentTab: 'app',
       errors: [],
       loading: true,
     };
@@ -124,15 +136,16 @@ export default {
     djangoVersion() {
       return this.api ? this.api.django : null;
     },
-    appShortCommit() {
-      return this.app && this.app.commit
-        ? this.app.commit.substring(0, 12)
-        : null;
+    appCommit() {
+      return this.app ? this.app.commit : null;
     },
-    apiShortCommit() {
-      return this.api && this.api.commit
-        ? this.api.commit.substring(0, 12)
-        : null;
+    apiCommit() {
+      return this.api ? this.api.commit : null;
+    },
+    currentName() {
+      return this.currentTab === 'app'
+        ? this.config.appName
+        : this.config.apiName;
     },
   },
   mounted() {
@@ -180,9 +193,14 @@ export default {
 <style lang="scss">
 @import 'photon-colors/photon-colors.scss';
 
+$column-gap: 0.4rem;
+$family-sans-serif: 'Fira Sans';
+$section-padding: 1rem;
+
+@import 'bulma/bulma.sass';
+
 body {
   color: $grey-90;
-  font-family: 'Fira Sans';
   font-size: 13px;
   font-weight: 400;
 }
@@ -199,25 +217,19 @@ a {
   }
 }
 
-.text-section-header {
-  font-size: 28px;
+.App-title {
   font-weight: 300;
 }
 
 .App {
-  .App-info-panels {
+  width: 350px;
+
+  .App-info-panel {
     -moz-user-select: text;
-    display: flex;
 
-    .App-info-panel {
-      margin: 0 20px;
-      min-height: 200px;
-      min-width: 230px;
-
-      h3 {
-        font-size: 17px;
-        font-weight: 500;
-      }
+    h3 {
+      font-size: 17px;
+      font-weight: 500;
     }
   }
 }

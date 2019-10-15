@@ -1,5 +1,5 @@
 <template>
-  <div class="ProjectVersion">
+  <div class="ProjectVersion column">
     <h3>tag deployed</h3>
 
     <p class="ProjectVersion-number">

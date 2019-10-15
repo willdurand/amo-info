@@ -1,6 +1,12 @@
 <template>
-  <h2 v-if="name">{{ name }}{{ env ? ` (${env})` : '' }}</h2>
-  <h2 class="loading" v-else><Skeleton /></h2>
+  <div class="Version">
+    <h3>{{ title }}</h3>
+
+    <div>
+      <Skeleton class="skeleton" v-if="!value" />
+      <pre v-else>{{ value }}</pre>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -11,8 +17,7 @@ export default {
     Skeleton,
   },
   props: {
-    env: String,
-    name: String,
+    value: String,
   },
 };
 </script>

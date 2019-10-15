@@ -1,5 +1,5 @@
 <template>
-  <div class="commit">
+  <div class="Commit column">
     <h3>commit</h3>
 
     <div>
@@ -30,14 +30,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.commit {
+.Commit {
   h3 {
     font-size: 17px;
     font-weight: 500;
   }
 
   .skeleton {
-    width: 60%;
+    width: 80%;
   }
 }
 </style>

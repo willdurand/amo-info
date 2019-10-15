@@ -1,5 +1,5 @@
 <template>
-  <div class="Version">
+  <div class="Value column">
     <h3>{{ title }}</h3>
 
     <div>
@@ -24,10 +24,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Version {
+.Value {
   h3 {
     font-size: 17px;
     font-weight: 500;
+  }
+
+  pre {
+    background-color: transparent;
+    font-size: 13px;
+    padding: 5px 0 0;
   }
 
   .skeleton {
