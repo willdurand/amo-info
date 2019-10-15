@@ -58,6 +58,7 @@
           <ProjectVersion
             v-if="api && api.version"
             v-bind:no-milestone="config.hasMilestone === false"
+            v-bind:no-push-doc="config.pushDoc === false"
             v-bind:version="api.version"
           />
 
