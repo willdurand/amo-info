@@ -36,34 +36,22 @@
 
             <DataTable v-bind:items="featureFlags" />
           </div>
-
-          <Commit v-bind:sha="appCommit" v-bind:repo="config.appRepo" />
-
-          <ProjectVersion
-            v-if="app && app.version"
-            v-bind:no-milestone="config.hasMilestone === false"
-            v-bind:no-push-doc="config.pushDoc === false"
-            v-bind:version="app.version"
-          />
-
-          <ProjectRepo v-bind:repository="config.appRepo" />
         </template>
         <template v-else>
           <Value title="python" v-bind:value="pythonVersion" />
 
           <Value title="django" v-bind:value="djangoVersion" />
-
-          <Commit v-bind:sha="apiCommit" v-bind:repo="config.apiRepo" />
-
-          <ProjectVersion
-            v-if="api && api.version"
-            v-bind:no-milestone="config.hasMilestone === false"
-            v-bind:no-push-doc="config.pushDoc === false"
-            v-bind:version="api.version"
-          />
-
-          <ProjectRepo v-bind:repository="config.apiRepo" />
         </template>
+
+        <Commit v-bind:sha="currentCommit" v-bind:repo="currentRepo" />
+
+        <ProjectVersion
+          v-bind:no-milestone="config.hasMilestone === false"
+          v-bind:no-push-doc="config.pushDoc === false"
+          v-bind:version="currentVersion"
+        />
+
+        <ProjectRepo v-bind:repository="currentRepo" />
       </div>
     </div>
   </div>
@@ -137,16 +125,29 @@ export default {
     djangoVersion() {
       return this.api ? this.api.django : null;
     },
-    appCommit() {
-      return this.app ? this.app.commit : null;
-    },
-    apiCommit() {
+    currentCommit() {
+      if (this.currentTab === 'app') {
+        return this.app ? this.app.commit : null;
+      }
+
       return this.api ? this.api.commit : null;
     },
     currentName() {
       return this.currentTab === 'app'
         ? this.config.appName
         : this.config.apiName;
+    },
+    currentRepo() {
+      return this.currentTab === 'app'
+        ? this.config.appRepo
+        : this.config.apiRepo;
+    },
+    currentVersion() {
+      if (this.currentTab === 'app') {
+        return this.app ? this.app.version : null;
+      }
+
+      return this.api ? this.api.version : null;
     },
   },
   mounted() {
@@ -218,12 +219,12 @@ a {
   }
 }
 
-.App-title {
-  font-weight: 300;
-}
-
 .App {
   width: 350px;
+
+  .App-title {
+    font-weight: 300;
+  }
 
   .App-info-panel {
     -moz-user-select: text;
@@ -232,18 +233,6 @@ a {
       font-size: 17px;
       font-weight: 500;
     }
-  }
-}
-
-.App-errors {
-  background-color: $red-60;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  color: $white-100;
-  padding: 10px;
-
-  p {
-    padding: 0 10px 0;
   }
 }
 </style>
