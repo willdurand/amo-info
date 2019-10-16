@@ -41,7 +41,7 @@
     "photon-colors": "^3.3.2",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.0",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "sass-loader": "^7.1.0",
     "string-humanize": "^1.0.1",
     "vue": "^2.6.10",
