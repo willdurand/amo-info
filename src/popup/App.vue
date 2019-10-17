@@ -97,7 +97,7 @@ export default {
 
       return Object.keys(experiments).reduce(
         (array, key) => array.concat({ name: key, enabled: experiments[key] }),
-        []
+        [],
       );
     },
     featureFlags() {
@@ -116,7 +116,7 @@ export default {
             name: key.replace(/^enableFeature/, ''),
             enabled: feature_flags[key],
           }),
-        []
+        [],
       );
     },
     pythonVersion() {
