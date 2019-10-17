@@ -1,0 +1,11 @@
+# exclude everything by default
+*.*
+# exclude these directories
+/dist/
+/node_modules/
+# white-list files we want to process
+!*.html
+!*.js
+!*.md
+!*.scss
+!*.vue
