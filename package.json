@@ -9,9 +9,11 @@
     "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
     "build:release": "npm run build && rimraf dist-zip/ && node scripts/build-zip.js && npm run build:src",
     "build:src": "git archive --format zip -o dist-zip/amo-info-sources.zip HEAD",
-    "lint": "eslint --ext .js,.vue src",
-    "precommit": "pretty-quick --staged",
+    "eslint": "eslint --ext .js,.vue src",
+    "lint": "yarn eslint",
     "prettier": "prettier \"src/**/*.{js,vue}\" --write",
+    "prettier-ci": "prettier --list-different '**' || (echo '\n\nThis failure means you did not run `yarn prettier-dev` before committing\n\n' && exit 1)",
+    "prettier-dev": "pretty-quick --branch master",
     "version": "dot-json src/manifest.json version $(node -p \"require('./package.json').version\") && git add src/manifest.json",
     "watch": "npm run build:dev -- --watch"
   },
@@ -51,5 +53,10 @@
     "webpack-cli": "^3.3.4",
     "webpack-shell-plugin": "^0.5.0",
     "zip-folder": "^1.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

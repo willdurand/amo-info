@@ -1,0 +1,26 @@
+language: node_js
+_aliases:
+  - &node-prod # This is the NodeJS version we run in production.
+    node_js: '10'
+
+cache:
+  yarn: true
+
+# See: https://github.com/mozilla/addons-frontend/issues/3034
+install: yarn install --pure-lockfile
+
+matrix:
+  fast_finish: true
+
+jobs:
+  include:
+    # Make sure we can build a production package.
+    - name: package module (node@production)
+      <<: *node-prod
+      script: yarn pack
+    - name: prettier (node@production)
+      <<: *node-prod
+      script: yarn prettier-ci
+    - name: linter (node@production)
+      <<: *node-prod
+      script: yarn lint
