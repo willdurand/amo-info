@@ -14,10 +14,10 @@ matrix:
 
 jobs:
   include:
-    # Make sure we can build a production package.
-    - name: package module (node@production)
+    # Make sure we can build a production release.
+    - name: build release (node@production)
       <<: *node-prod
-      script: yarn pack
+      script: yarn build:release
     - name: prettier (node@production)
       <<: *node-prod
       script: yarn prettier-ci

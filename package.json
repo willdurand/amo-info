@@ -11,7 +11,7 @@
     "build:src": "git archive --format zip -o dist-zip/amo-info-sources.zip HEAD",
     "eslint": "eslint --ext .js,.vue src",
     "lint": "yarn eslint",
-    "prettier": "prettier \"src/**/*.{js,vue}\" --write",
+    "prettier": "prettier --write '**'",
     "prettier-ci": "prettier --list-different '**' || (echo '\n\nThis failure means you did not run `yarn prettier-dev` before committing\n\n' && exit 1)",
     "prettier-dev": "pretty-quick --branch master",
     "version": "dot-json src/manifest.json version $(node -p \"require('./package.json').version\") && git add src/manifest.json",
