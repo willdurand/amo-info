@@ -2,6 +2,7 @@
 *.*
 # exclude these directories
 /dist/
+/dist-zip/
 /node_modules/
 # white-list files we want to process
 !*.html
