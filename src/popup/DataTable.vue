@@ -17,13 +17,15 @@
         </td>
         <td
           class="DataTable-item-state"
-          v-bind:class="{ 'DataTable-item-state--enabled': item.enabled }"
+          :class="{ 'DataTable-item-state--enabled': item.enabled }"
         >
           {{ item.enabled ? 'ON' : 'OFF' }}
         </td>
       </tr>
       <tr v-if="items.length === 0">
-        <td colspan="2">none</td>
+        <td colspan="2">
+          none
+        </td>
       </tr>
     </template>
   </table>
@@ -38,13 +40,13 @@ export default {
   components: {
     Skeleton,
   },
-  props: {
-    items: Array,
-  },
   filters: {
     humanize(str) {
       return humanize(str);
     },
+  },
+  props: {
+    items: Array,
   },
 };
 </script>

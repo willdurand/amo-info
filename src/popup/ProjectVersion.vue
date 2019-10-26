@@ -7,15 +7,15 @@
 
       <template v-if="!noPushDoc">
         &mdash;
-        <a v-bind:href="pushDocURL" title="Quick access to the push doc">
+        <a :href="pushDocURL" title="Quick access to the push doc">
           Push Doc
         </a>
       </template>
     </p>
-    <p class="ProjectVersion-pm-milestone" v-if="!noMilestone">
+    <p v-if="!noMilestone" class="ProjectVersion-pm-milestone">
       🌟
       <a
-        v-bind:href="pmMilestoneURL"
+        :href="pmMilestoneURL"
         title="Review this milestone in Add-ons Project Manager"
       >
         Review this milestone

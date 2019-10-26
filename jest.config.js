@@ -8,4 +8,5 @@ module.exports = {
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
+  setupFilesAfterEnv: ['<rootDir>/test-setup.js'],
 };

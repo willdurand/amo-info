@@ -3,10 +3,7 @@
     <p class="ProjectRepo-url">
       <GitHubLogo />
 
-      <a
-        v-if="repository"
-        v-bind:href="'https://github.com/mozilla/' + repository"
-      >
+      <a v-if="repository" :href="'https://github.com/mozilla/' + repository">
         {{ repository }}
       </a>
       <Skeleton v-else />

@@ -3,7 +3,7 @@
     <h3>{{ title }}</h3>
 
     <div>
-      <Skeleton class="skeleton" v-if="!value" />
+      <Skeleton v-if="!value" class="skeleton" />
       <pre v-else>{{ value }}</pre>
     </div>
   </div>
