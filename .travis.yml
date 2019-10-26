@@ -15,12 +15,15 @@ matrix:
 jobs:
   include:
     # Make sure we can build a production release.
-    - name: build release (node@production)
+    - name: build release
       <<: *node-prod
       script: yarn build:release
-    - name: prettier (node@production)
+    - name: unit tests
+      <<: *node-prod
+      script: yarn test
+    - name: prettier
       <<: *node-prod
       script: yarn prettier-ci
-    - name: linter (node@production)
+    - name: linter
       <<: *node-prod
       script: yarn lint
