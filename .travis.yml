@@ -20,7 +20,7 @@ jobs:
       script: yarn build:release
     - name: unit tests
       <<: *node-prod
-      script: yarn test
+      script: yarn test --coverage && codecov
     - name: prettier
       <<: *node-prod
       script: yarn prettier-ci
