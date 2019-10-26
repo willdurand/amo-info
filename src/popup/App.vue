@@ -1,10 +1,14 @@
 <template>
   <div class="App section">
     <div class="container">
-      <h1 class="App-title title">amo-info</h1>
+      <h1 class="App-title title">
+        amo-info
+      </h1>
 
-      <div class="notification is-danger" v-if="errors.length">
-        <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+      <div v-if="errors.length" class="notification is-danger">
+        <p v-for="error in errors" v-bind:key="error">
+          {{ error }}
+        </p>
       </div>
 
       <div class="tabs is-toggle is-fullwidth">
@@ -25,16 +29,16 @@
         <Value title="environment" v-bind:value="config.env" />
 
         <template v-if="currentTab === 'app'">
-          <div class="experiments column" v-if="config.hasExperiments">
+          <div v-if="config.hasExperiments" class="experiments column">
             <h3>a/b experiments</h3>
 
-            <DataTable v-bind:items="experiments" />
+            <DataTable :items="experiments" />
           </div>
 
-          <div class="feature-flags column" v-if="config.hasFeatureFlags">
+          <div v-if="config.hasFeatureFlags" class="feature-flags column">
             <h3>feature flags</h3>
 
-            <DataTable v-bind:items="featureFlags" />
+            <DataTable :items="featureFlags" />
           </div>
         </template>
         <template v-else>
@@ -43,15 +47,15 @@
           <Value title="django" v-bind:value="djangoVersion" />
         </template>
 
-        <Commit v-bind:sha="currentCommit" v-bind:repo="currentRepo" />
+        <Commit :sha="currentCommit" v-bind:repo="currentRepo" />
 
         <ProjectVersion
-          v-bind:no-milestone="config.hasMilestone === false"
-          v-bind:no-push-doc="config.pushDoc === false"
-          v-bind:version="currentVersion"
+          :no-milestone="config.hasMilestone === false"
+          :no-push-doc="config.pushDoc === false"
+          :version="currentVersion"
         />
 
-        <ProjectRepo v-bind:repository="currentRepo" />
+        <ProjectRepo :repository="currentRepo" />
       </div>
     </div>
   </div>

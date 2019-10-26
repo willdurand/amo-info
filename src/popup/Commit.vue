@@ -3,7 +3,7 @@
     <h3>commit</h3>
 
     <div>
-      <Skeleton class="skeleton" v-if="!sha" />
+      <Skeleton v-if="!sha" class="skeleton" />
       <a
         v-else
         :href="'https://github.com/mozilla/' + repo + '/commit/' + sha"
