@@ -1,0 +1,28 @@
+name: ci
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        node-version: [10.x, 12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: yarn install
+        # See: https://github.com/mozilla/addons-frontend/issues/3034
+        run: yarn install --pure-lockfile
+      - name: yarn test
+        run: yarn test --coverage && yarn run codecov
+        env:
+          CI: true
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - run: yarn lint
+      - run: yarn prettier-ci
+      - run: yarn build:release

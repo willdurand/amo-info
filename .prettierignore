@@ -1,8 +1,9 @@
 # exclude everything by default
 *.*
 # exclude these directories
-/dist/
+/coverage/
 /dist-zip/
+/dist/
 /node_modules/
 # white-list files we want to process
 !*.html
