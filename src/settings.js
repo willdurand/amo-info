@@ -1,5 +1,25 @@
+const Env = {
+  DEV: 'dev',
+  PROD: 'prod',
+  STAGE: 'stage',
+};
+
+export const defaultConfig = {
+  apiName: 'api',
+  apiRepo: null,
+  apiVersion: null,
+  appName: 'app',
+  appRepo: null,
+  appVersion: null,
+  hasExperiments: false,
+  hasFeatureFlags: false,
+  hasMilestone: true,
+  pushDoc: true,
+};
+
 const projects = {
   code: {
+    ...defaultConfig,
     apiName: 'addons-server',
     apiVersion: '__version__',
     appName: 'code-manager',
@@ -10,6 +30,7 @@ const projects = {
     apiRepo: 'addons-server',
   },
   discovery: {
+    ...defaultConfig,
     apiName: 'addons-server',
     apiVersion: '__version__',
     appName: 'discopane',
@@ -20,6 +41,7 @@ const projects = {
     apiRepo: 'addons-server',
   },
   frontend: {
+    ...defaultConfig,
     apiName: 'addons-server',
     apiVersion: '__version__',
     appName: 'addons-frontend',
@@ -30,6 +52,7 @@ const projects = {
     apiRepo: 'addons-server',
   },
   reviewerTools: {
+    ...defaultConfig,
     apiName: 'addons-server',
     apiVersion: '__version__',
     appName: 'reviewer tools',
@@ -40,6 +63,7 @@ const projects = {
     apiRepo: 'addons-server',
   },
   extensionWorkshop: {
+    ...defaultConfig,
     apiName: null,
     apiVersion: null,
     appName: 'extension workshop',
@@ -51,19 +75,6 @@ const projects = {
     pushDoc: false,
     hasMilestone: false,
   },
-};
-
-const Env = {
-  DEV: 'dev',
-  PROD: 'prod',
-  STAGE: 'stage',
-};
-
-export const defaultConfig = {
-  apiName: 'api',
-  appName: 'app',
-  hasExperiments: false,
-  hasFeatureFlags: false,
 };
 
 export const projectsByOrigin = {
