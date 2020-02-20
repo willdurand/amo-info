@@ -27,7 +27,7 @@
     "babel-jest": "^25.0.0",
     "babel-loader": "^8.0.6",
     "bulma": "^0.8.0",
-    "codecov": "^3.6.1",
+    "codecov": "^3.6.5",
     "copy-webpack-plugin": "^5.0.0",
     "cross-env": "^7.0.0",
     "css-loader": "^3.0.0",
