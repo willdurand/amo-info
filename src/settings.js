@@ -1,5 +1,6 @@
 const Env = {
   DEV: 'dev',
+  LOCAL: 'local',
   PROD: 'prod',
   STAGE: 'stage',
 };
@@ -78,6 +79,24 @@ const projects = {
 };
 
 export const projectsByOrigin = {
+  'http://olympia.test': {
+    ...projects.frontend,
+    env: Env.LOCAL,
+    pushDoc: false,
+    hasMilestone: false,
+  },
+  'http://localhost:3000': {
+    ...projects.frontend,
+    env: Env.LOCAL,
+    pushDoc: false,
+    hasMilestone: false,
+  },
+  'https://example.com:3000': {
+    ...projects.frontend,
+    env: Env.LOCAL,
+    pushDoc: false,
+    hasMilestone: false,
+  },
   'https://addons-dev.allizom.org': {
     ...projects.frontend,
     env: Env.DEV,

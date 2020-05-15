@@ -20,6 +20,9 @@
     "browser_style": true,
     "default_popup": "popup/popup.html",
     "show_matches": [
+      "http://olympia.test/*",
+      "http://localhost:3000/*",
+      "https://example.com:3000/*",
       "https://*.addons-dev.allizom.org/*",
       "https://*.addons.allizom.org/*",
       "https://*.addons.mozilla.org/*",
@@ -41,6 +44,9 @@
   "permissions": [
     "activeTab",
     "storage",
+    "http://olympia.test/*",
+    "http://localhost:3000/*",
+    "https://example.com:3000/*",
     "https://*.addons-dev.allizom.org/*",
     "https://*.addons.allizom.org/*",
     "https://*.addons.mozilla.org/*",

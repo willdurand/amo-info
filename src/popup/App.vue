@@ -53,6 +53,7 @@
           :no-milestone="config.hasMilestone === false"
           :no-push-doc="config.pushDoc === false"
           :version="currentVersion"
+          v-if="currentVersion"
         />
 
         <ProjectRepo :repository="currentRepo" />
