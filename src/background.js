@@ -31,8 +31,8 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
   }
 
   const options = {};
-  let appOrigin = config.appOrigin || origin;
-  let apiOrigin = config.apiOrigin || origin;
+  const appOrigin = config.appOrigin || origin;
+  const apiOrigin = config.apiOrigin || origin;
 
   // TODO: https://bugzilla.mozilla.org/show_bug.cgi?id=1450649
 
