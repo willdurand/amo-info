@@ -29,7 +29,7 @@ const PUSH_DOC_BASE_URL =
   'https://github.com/mozilla/addons/blob/main/releases';
 
 const PM_MILESTONE_URL_PATTERN =
-  'https://addons-pm.herokuapp.com/milestones/%milestone%/?dir=asc&sort=assignee';
+  'https://addons-pm.herokuapp.com/milestones/%milestone%/';
 
 export default {
   props: {
@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     milestone() {
-      return this.version.replace(/(\d+).(\d+).(\d+)(-\d+)?/, '$1.$2.$3');
+      return this.version.replace(/(\d+).(\d+).(\d+)(-\d+)?/, '$1-$2-$3');
     },
     pushDocURL() {
       const filename = `${this.milestone.replace(/\./g, '/')}.md`;
