@@ -79,7 +79,7 @@ import { projectsByOrigin, defaultConfig } from '../settings';
 import { getExperimentName } from '../helpers';
 
 const createError = (error, context) => {
-  return `The ${context} returned an error: ${error.message || error}`;
+  return `[${context} error] ${error.message || error}`;
 };
 
 export default {
@@ -208,14 +208,14 @@ export default {
           if (app.type === 'success') {
             this.app = app.payload;
           } else if (app.type === 'error') {
-            this.errors.push(createError(app.error, 'app'));
+            this.errors.push(createError(app.error, this.config.appName));
           }
 
           if (api) {
             if (api.type === 'success') {
               this.api = api.payload;
             } else if (api.type === 'error') {
-              this.errors.push(createError(api.error, 'api'));
+              this.errors.push(createError(api.error, this.config.apiName));
             }
           } else {
             this.api = null;
@@ -225,7 +225,7 @@ export default {
             if (extra.type === 'success') {
               this.extra = extra.payload;
             } else if (extra.type === 'error') {
-              this.errors.push(createError(extra.error, 'extra'));
+              this.errors.push(createError(extra.error, this.config.extraName));
             }
           } else {
             this.extra = null;
