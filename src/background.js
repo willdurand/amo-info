@@ -33,6 +33,7 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
   const options = {};
   const appOrigin = config.appOrigin || origin;
   const apiOrigin = config.apiOrigin || origin;
+  const extraOrigin = config.extraOrigin || origin;
 
   // TODO: https://bugzilla.mozilla.org/show_bug.cgi?id=1450649
 
@@ -45,6 +46,12 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
       ? Promise.resolve(null)
       : fetchVersion({
           endpoint: `${apiOrigin}/${config.apiVersion}`,
+          options,
+        }),
+    config.extraName === null
+      ? Promise.resolve(null)
+      : fetchVersion({
+          endpoint: `${extraOrigin}/${config.extraVersion}`,
           options,
         }),
   ]);

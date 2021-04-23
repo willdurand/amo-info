@@ -20,6 +20,12 @@
           >
             <a @click="currentTab = 'api'">{{ config.apiName }}</a>
           </li>
+          <li
+            v-if="config.extraName"
+            :class="[currentTab === 'extra' ? 'is-active' : '']"
+          >
+            <a @click="currentTab = 'extra'">{{ config.extraName }}</a>
+          </li>
         </ul>
       </div>
 
@@ -39,17 +45,20 @@
             <DataTable :items="featureFlags" />
           </div>
         </template>
-        <template v-else>
+        <template v-if="currentTab === 'api'">
           <Value title="python" v-bind:value="pythonVersion" />
 
           <Value title="django" v-bind:value="djangoVersion" />
         </template>
+        <template v-else> </template>
 
         <Commit :sha="currentCommit" v-bind:repo="currentRepo" />
 
         <ProjectVersion
-          :no-milestone="config.hasMilestone === false"
-          :no-push-doc="config.pushDoc === false"
+          :no-milestone="
+            config.hasMilestone === false || currentTab === 'extra'
+          "
+          :no-push-doc="config.pushDoc === false || currentTab === 'extra'"
           :version="currentVersion"
           v-if="currentVersion"
         />
@@ -134,28 +143,42 @@ export default {
       return this.api ? this.api.django : null;
     },
     currentCommit() {
-      if (this.currentTab === 'app') {
-        return this.app ? this.app.commit : null;
+      if (this[this.currentTab]) {
+        return this[this.currentTab].commit || null;
       }
 
-      return this.api ? this.api.commit : null;
+      return null;
     },
     currentName() {
-      return this.currentTab === 'app'
-        ? this.config.appName
-        : this.config.apiName;
+      switch (this.currentTab) {
+        case 'app':
+          return this.config.appName;
+        case 'api':
+          return this.config.apiName;
+        case 'extra':
+          return this.config.extraName;
+        default:
+          return null;
+      }
     },
     currentRepo() {
-      return this.currentTab === 'app'
-        ? this.config.appRepo
-        : this.config.apiRepo;
+      switch (this.currentTab) {
+        case 'app':
+          return this.config.appRepo;
+        case 'api':
+          return this.config.apiRepo;
+        case 'extra':
+          return this.config.extraRepo;
+        default:
+          return null;
+      }
     },
     currentVersion() {
-      if (this.currentTab === 'app') {
-        return this.app ? this.app.version : null;
+      if (this[this.currentTab]) {
+        return this[this.currentTab].version || null;
       }
 
-      return this.api ? this.api.version : null;
+      return null;
     },
   },
   mounted() {
@@ -180,7 +203,7 @@ export default {
             return;
           }
 
-          const [app, api] = response;
+          const [app, api, extra] = response;
 
           if (app.type === 'success') {
             this.app = app.payload;
@@ -188,15 +211,24 @@ export default {
             this.errors.push(createError(app.error, 'app'));
           }
 
-          if (!api) {
+          if (api) {
+            if (api.type === 'success') {
+              this.api = api.payload;
+            } else if (api.type === 'error') {
+              this.errors.push(createError(api.error, 'api'));
+            }
+          } else {
             this.api = null;
-            return;
           }
 
-          if (api.type === 'success') {
-            this.api = api.payload;
-          } else if (api.type === 'error') {
-            this.errors.push(createError(api.error, 'api'));
+          if (extra) {
+            if (extra.type === 'success') {
+              this.extra = extra.payload;
+            } else if (extra.type === 'error') {
+              this.errors.push(createError(extra.error, 'extra'));
+            }
+          } else {
+            this.extra = null;
           }
         });
     });

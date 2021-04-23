@@ -16,6 +16,10 @@ export const defaultConfig = {
   hasFeatureFlags: false,
   hasMilestone: true,
   pushDoc: true,
+  // Allow a third repo per project... One day, we'll refactor all this mess.
+  extraName: null,
+  extraVersion: null,
+  extraRepo: null,
 };
 
 const projects = {
@@ -43,14 +47,17 @@ const projects = {
   },
   frontend: {
     ...defaultConfig,
-    apiName: 'addons-server',
+    apiName: 'server',
     apiVersion: '__version__',
-    appName: 'addons-frontend',
+    appName: 'frontend',
     appVersion: '__frontend_version__',
+    extraName: 'blog',
+    extraVersion: '/blog/__version__',
     hasExperiments: true,
     hasFeatureFlags: true,
     appRepo: 'addons-frontend',
     apiRepo: 'addons-server',
+    extraRepo: 'addons-blog',
   },
   reviewerTools: {
     ...defaultConfig,
