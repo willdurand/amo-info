@@ -21,49 +21,31 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
     return Promise.resolve({ type: 'error', error: 'invalid "from" value' });
   }
 
-  return browser.storage.sync
-    .get('isCorsAnywhereEnabled')
-    .then(({ isCorsAnywhereEnabled }) => {
-      const config = projectsByOrigin[origin] || null;
+  const config = projectsByOrigin[origin] || null;
 
-      if (!config) {
-        return Promise.resolve({
-          type: 'error',
-          error: `config not found for origin = "${origin}"`,
-        });
-      }
+  if (!config) {
+    return Promise.resolve({
+      type: 'error',
+      error: `config not found for origin = "${origin}"`,
+    });
+  }
 
-      const options = {};
-      let appOrigin = config.appOrigin || origin;
-      let apiOrigin = config.apiOrigin || origin;
+  const options = {};
+  const appOrigin = config.appOrigin || origin;
+  const apiOrigin = config.apiOrigin || origin;
 
-      // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1450649
-      if (!!isCorsAnywhereEnabled || origin.includes('addons.mozilla.org')) {
-        if (isCorsAnywhereEnabled) {
-          // eslint-disable-next-line no-console
-          console.debug('replacing "origin" because of user preference');
-        } else {
-          // eslint-disable-next-line no-console
-          console.debug('replacing "origin" because of a FF restriction');
-        }
+  // TODO: https://bugzilla.mozilla.org/show_bug.cgi?id=1450649
 
-        // eslint-disable-next-line no-param-reassign
-        appOrigin = `https://cors-anywhere.herokuapp.com/${appOrigin}`;
-        apiOrigin = `https://cors-anywhere.herokuapp.com/${apiOrigin}`;
-        options.headers = new Headers({ 'x-requested-with': 'amo-info' });
-      }
-
-      return Promise.all([
-        fetchVersion({
-          endpoint: `${appOrigin}/${config.appVersion}`,
+  return Promise.all([
+    fetchVersion({
+      endpoint: `${appOrigin}/${config.appVersion}`,
+      options,
+    }),
+    config.apiName === null
+      ? Promise.resolve(null)
+      : fetchVersion({
+          endpoint: `${apiOrigin}/${config.apiVersion}`,
           options,
         }),
-        config.apiName === null
-          ? Promise.resolve(null)
-          : fetchVersion({
-              endpoint: `${apiOrigin}/${config.apiVersion}`,
-              options,
-            }),
-      ]);
-    });
+  ]);
 });
