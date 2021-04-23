@@ -52,7 +52,7 @@ const projects = {
     appName: 'frontend',
     appVersion: '__frontend_version__',
     extraName: 'blog',
-    extraVersion: '/blog/__version__',
+    extraVersion: 'blog/__version__',
     hasExperiments: true,
     hasFeatureFlags: true,
     appRepo: 'addons-frontend',
