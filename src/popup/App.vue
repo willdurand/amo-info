@@ -1,9 +1,7 @@
 <template>
   <div class="App section">
     <div class="container">
-      <h1 class="App-title title">
-        amo-info
-      </h1>
+      <h1 class="App-title title">amo-info</h1>
 
       <div v-if="errors.length" class="notification is-danger">
         <p v-for="error in errors" v-bind:key="error">

@@ -23,9 +23,7 @@
         </td>
       </tr>
       <tr v-if="items.length === 0">
-        <td colspan="2">
-          none
-        </td>
+        <td colspan="2">none</td>
       </tr>
     </template>
   </table>
