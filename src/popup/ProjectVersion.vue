@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     milestone() {
-      return this.version.replace(/(\d+).(\d+).(\d+)(-\d+)?/, '$1.$2.$3');
+      return this.version.replace(/(\d+).(\d+).(\d+)(-\d+)?/, '$1-$2-$3');
     },
     pushDocURL() {
       const filename = `${this.milestone.replace(/\./g, '/')}.md`;
