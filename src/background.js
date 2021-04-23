@@ -31,7 +31,7 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
   }
 
   const options = {
-    mode: 'no-cors',
+    mode: 'cors',
   };
   const appOrigin = config.appOrigin || origin;
   const apiOrigin = config.apiOrigin || origin;
