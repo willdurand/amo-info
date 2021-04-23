@@ -13,7 +13,7 @@
     "lint": "yarn eslint",
     "prettier": "prettier --write '**'",
     "prettier-ci": "prettier --list-different '**' || (echo '\n\nThis failure means you did not run `yarn prettier-dev` before committing\n\n' && exit 1)",
-    "prettier-dev": "pretty-quick --branch master",
+    "prettier-dev": "pretty-quick --branch main",
     "test": "jest",
     "version": "dot-json src/manifest.json version $(node -p \"require('./package.json').version\") && git add src/manifest.json",
     "watch": "npm run build:dev -- --watch"

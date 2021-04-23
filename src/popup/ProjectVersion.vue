@@ -26,7 +26,7 @@
 
 <script>
 const PUSH_DOC_BASE_URL =
-  'https://github.com/mozilla/addons/blob/master/releases';
+  'https://github.com/mozilla/addons/blob/main/releases';
 
 const PM_MILESTONE_URL_PATTERN =
   'https://addons-pm.herokuapp.com/milestones/%milestone%/?dir=asc&sort=assignee';
