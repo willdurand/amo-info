@@ -28,7 +28,7 @@
 
         <template v-if="currentTab === 'app'">
           <div v-if="config.hasExperiments" class="experiments column">
-            <h3>a/b experiments</h3>
+            <h3>experiments</h3>
 
             <DataTable :items="experiments" />
           </div>
@@ -67,6 +67,7 @@ import ProjectRepo from './ProjectRepo';
 import ProjectVersion from './ProjectVersion';
 import Value from './Value';
 import { projectsByOrigin, defaultConfig } from '../settings';
+import { getExperimentName } from '../helpers';
 
 const createError = (error, context) => {
   return `The ${context} returned an error: ${error.message || error}`;
@@ -99,7 +100,11 @@ export default {
       }
 
       return Object.keys(experiments).reduce(
-        (array, key) => array.concat({ name: key, enabled: experiments[key] }),
+        (array, key) =>
+          array.concat({
+            name: getExperimentName(key),
+            enabled: experiments[key],
+          }),
         [],
       );
     },
@@ -154,6 +159,10 @@ export default {
     },
   },
   mounted() {
+    if (typeof browser === 'undefined') {
+      return;
+    }
+
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const currentTab = tabs[0];
       const { origin } = new URL(currentTab.url);

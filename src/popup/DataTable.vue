@@ -1,7 +1,7 @@
 <template>
   <table class="DataTable">
     <template v-if="!items">
-      <tr v-for="n in 2" v-bind:key="'skeleton-' + n">
+      <tr v-for="n in 2" v-bind:key="'skeleton-' + n" class="DataTable-item">
         <td class="DataTable-item-name">
           <Skeleton />
         </td>
@@ -11,7 +11,7 @@
       </tr>
     </template>
     <template v-else>
-      <tr v-for="item in items" v-bind:key="item.name">
+      <tr v-for="item in items" v-bind:key="item.name" class="DataTable-item">
         <td class="DataTable-item-name">
           {{ item.name | humanize }}
         </td>
@@ -56,8 +56,9 @@ export default {
   width: 100%;
 }
 
-.DataTable-item-name {
-  padding: 5px 10px 5px 0;
+.DataTable-item-name,
+.DataTable-item-state {
+  padding: 5px 0 5px 0;
 }
 
 .DataTable-item-state {
