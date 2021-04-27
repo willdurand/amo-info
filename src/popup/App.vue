@@ -50,7 +50,9 @@
 
           <Value title="django" v-bind:value="djangoVersion" />
         </template>
-        <template v-else> </template>
+        <template v-if="currentTab === 'extra'">
+          <Value title="build time" v-bind:value="buildtime" />
+        </template>
 
         <Commit :sha="currentCommit" v-bind:repo="currentRepo" />
 
@@ -141,6 +143,9 @@ export default {
     },
     djangoVersion() {
       return this.api ? this.api.django : null;
+    },
+    buildtime() {
+      return this.extra ? this.extra.buildtime : null;
     },
     currentCommit() {
       if (this[this.currentTab]) {
