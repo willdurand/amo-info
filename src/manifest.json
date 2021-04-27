@@ -29,9 +29,9 @@
       "https://addons-dev.allizom.org/*",
       "https://addons.allizom.org/*",
       "https://addons.mozilla.org/*",
-      "https://extensionworkshop-dev.allizom.org/",
-      "https://extensionworkshop.allizom.org/",
-      "https://extensionworkshop.com/"
+      "https://extensionworkshop-dev.allizom.org/*",
+      "https://extensionworkshop.allizom.org/*",
+      "https://extensionworkshop.com/*"
     ]
   },
   "background": {
