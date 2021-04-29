@@ -21,8 +21,8 @@
     "default_popup": "popup/popup.html",
     "show_matches": [
       "http://olympia.test/*",
-      "http://localhost:3000/*",
-      "https://example.com:3000/*",
+      "http://localhost/*",
+      "https://example.com/*",
       "https://*.addons-dev.allizom.org/*",
       "https://*.addons.allizom.org/*",
       "https://*.addons.mozilla.org/*",

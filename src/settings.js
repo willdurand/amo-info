@@ -91,18 +91,21 @@ export const projectsByOrigin = {
     env: Env.LOCAL,
     pushDoc: false,
     hasMilestone: false,
+    extraName: null,
   },
   'http://localhost:3000': {
     ...projects.frontend,
     env: Env.LOCAL,
     pushDoc: false,
     hasMilestone: false,
+    extraName: null,
   },
   'https://example.com:3000': {
     ...projects.frontend,
     env: Env.LOCAL,
     pushDoc: false,
     hasMilestone: false,
+    extraName: null,
   },
   'https://addons-dev.allizom.org': {
     ...projects.frontend,
