@@ -49,6 +49,8 @@
           <Value title="python" v-bind:value="pythonVersion" />
 
           <Value title="django" v-bind:value="djangoVersion" />
+
+          <Value title="addons-linter" v-bind:value="linterVersion" />
         </template>
         <template v-if="currentTab === 'extra'">
           <Value title="build time" v-bind:value="buildtime" />
@@ -143,6 +145,9 @@ export default {
     },
     djangoVersion() {
       return this.api ? this.api.django : null;
+    },
+    linterVersion() {
+      return this.api ? this.api['addons-linter'] || 'n/a' : null;
     },
     buildtime() {
       return this.extra ? this.extra.buildtime : null;
