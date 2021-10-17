@@ -17,7 +17,6 @@
     "default_icon": {
       "64": "icons/icon.png"
     },
-    "browser_style": true,
     "default_popup": "popup/popup.html",
     "show_matches": [
       "http://olympia.test/*",

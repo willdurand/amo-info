@@ -254,11 +254,16 @@ $family-sans-serif: 'Fira Sans';
 $section-padding: 1rem;
 
 @import 'bulma/bulma.sass';
+@import 'bulma-prefers-dark/bulma-prefers-dark.sass';
 
 body {
   color: $grey-90;
   font-size: 13px;
   font-weight: 400;
+
+  @media (prefers-color-scheme: dark) {
+    color: $grey-30;
+  }
 }
 
 a {
@@ -274,6 +279,7 @@ a {
 }
 
 .App {
+  margin: 0 auto;
   width: 350px;
 
   .App-title {
