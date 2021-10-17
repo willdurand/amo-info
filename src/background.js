@@ -58,3 +58,12 @@ browser.runtime.onMessage.addListener(({ from, origin }) => {
         }),
   ]);
 });
+
+if (
+  typeof navigator !== 'undefined' &&
+  navigator.userAgent.indexOf('Android') !== -1 &&
+  navigator.userAgent.indexOf('Mobile') !== -1
+) {
+  // Show button icon on Fenix.
+  browser.pageAction.show();
+}
