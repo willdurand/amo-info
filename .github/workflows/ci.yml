@@ -26,11 +26,4 @@ jobs:
       - run: yarn lint
       - run: yarn prettier-ci
       - run: yarn build:release
-      - name: web-ext lint
-        uses: kewisch/action-web-ext@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          cmd: lint
-          source: dist/
-          channel: listed
+      - run: yarn web-ext lint -s dist/
