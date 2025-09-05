@@ -8,13 +8,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [14.x]
+        node-version: [20.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
       - name: yarn install
         # See: https://github.com/mozilla/addons-frontend/issues/3034
         run: yarn install --pure-lockfile
@@ -25,5 +28,8 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - run: yarn lint
       - run: yarn prettier-ci
-      - run: yarn build:release
+      - name: yarn build
+        run: yarn build:release
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: yarn web-ext lint -s dist/
