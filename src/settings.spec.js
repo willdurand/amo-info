@@ -17,7 +17,6 @@ describe(__filename, () => {
         expect(config).toHaveProperty('hasExperiments');
         expect(config).toHaveProperty('hasFeatureFlags');
         expect(config).toHaveProperty('hasMilestone');
-        expect(config).toHaveProperty('pushDoc');
       },
     );
   });

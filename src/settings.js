@@ -15,7 +15,6 @@ export const defaultConfig = {
   hasExperiments: false,
   hasFeatureFlags: false,
   hasMilestone: true,
-  pushDoc: true,
   // Allow a third repo per project... One day, we'll refactor all this mess.
   extraName: null,
   extraVersion: null,
@@ -80,7 +79,6 @@ const projects = {
     hasFeatureFlags: false,
     appRepo: 'extension-workshop',
     apiRepo: null,
-    pushDoc: false,
     hasMilestone: false,
   },
 };
@@ -89,21 +87,18 @@ export const projectsByOrigin = {
   'http://olympia.test': {
     ...projects.frontend,
     env: Env.LOCAL,
-    pushDoc: false,
     hasMilestone: false,
     extraName: null,
   },
   'http://localhost:3000': {
     ...projects.frontend,
     env: Env.LOCAL,
-    pushDoc: false,
     hasMilestone: false,
     extraName: null,
   },
   'https://example.com:3000': {
     ...projects.frontend,
     env: Env.LOCAL,
-    pushDoc: false,
     hasMilestone: false,
     extraName: null,
   },
