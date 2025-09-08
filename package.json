@@ -31,7 +31,7 @@
     "codecov": "^3.8.3",
     "copy-webpack-plugin": "^5.0.0",
     "cross-env": "^7.0.0",
-    "css-loader": "^3.0.0",
+    "css-loader": "^7.1.2",
     "dot-json": "^1.1.0",
     "eslint": "^6.0.0",
     "eslint-config-airbnb-base": "^14.0.0",
