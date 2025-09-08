@@ -30,4 +30,4 @@ jobs:
       - run: yarn prettier-ci
       - name: yarn build
         run: yarn build:release
-      - run: yarn web-ext lint -s dist/
+      - run: npx addons-linter --enable-data-collection-permissions dist/
