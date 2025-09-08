@@ -30,6 +30,4 @@ jobs:
       - run: yarn prettier-ci
       - name: yarn build
         run: yarn build:release
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: yarn web-ext lint -s dist/

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackShellPlugin = require('webpack-shell-plugin');
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const { version } = require('./package.json');
@@ -23,7 +23,7 @@ const config = {
     rules: [
       {
         test: /\.vue$/,
-        loaders: 'vue-loader',
+        use: 'vue-loader',
       },
       {
         test: /\.js$/,
@@ -79,8 +79,10 @@ const config = {
         },
       },
     ]),
-    new WebpackShellPlugin({
-      onBuildEnd: ['node scripts/remove-evals.js'],
+    new WebpackShellPluginNext({
+      onBuildEnd: {
+        scripts: ['node scripts/remove-evals.js'],
+      },
     }),
   ],
 };
