@@ -62,7 +62,6 @@
           :no-milestone="
             config.hasMilestone === false || currentTab === 'extra'
           "
-          :no-push-doc="config.pushDoc === false || currentTab === 'extra'"
           :version="currentVersion"
           v-if="currentVersion"
         />
